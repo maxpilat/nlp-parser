@@ -1,7 +1,7 @@
 import nltk
 import inflect
 
-class NLPWorker:
+class NlpWorker:
     def __init__(self, sentence):
         self.download_nltk_data()
         self.sentence = sentence
@@ -40,7 +40,7 @@ class NLPWorker:
     @staticmethod
     def lemmatize(word, tag):
         lemmatizer = nltk.WordNetLemmatizer()
-        lemma = lemmatizer.lemmatize(word, NLPWorker.get_pos_by_tag(tag))
+        lemma = lemmatizer.lemmatize(word, NlpWorker.get_pos_by_tag(tag))
 
         # Приводим к единственному числу существительные
         if tag == 'NNS' or tag == 'NNPS':
@@ -86,17 +86,17 @@ class NLPWorker:
                 # Если узел является листом, добавляем информацию о слове и теге в список
                 word = subtree[0].lower()
                 tag = subtree[1]
-                return {'word': word, 'tag': tag, 'lemma': NLPWorker.lemmatize(word, tag)}
+                return {'origin': word, 'tag': tag, 'lemma': NlpWorker.lemmatize(word, tag)}
             
         data = [recursion(subtree) for subtree in tree]
-        sorted_data = sorted(data, key=lambda x: x['words'][0]['word'] if 'words' in x else x.get('word', ''))
+        sorted_data = sorted(data, key=lambda x: x['words'][0]['origin'] if 'words' in x else x.get('origin', ''))
         return sorted_data
 
 def test():
     # sentence = "The cat in the hat is sleeping."
     sentence = "I have an interesting book on the shelf."
 
-    nlp_worker = NLPWorker(sentence)
+    nlp_worker = NlpWorker(sentence)
 
     tree = nlp_worker.build_tree()
     tree.pretty_print()

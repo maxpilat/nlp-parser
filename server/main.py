@@ -1,14 +1,17 @@
 from posixpath import splitext
-from NLPWorker import NLPWorker
+from NlpWorker import NlpWorker
 from FileParser import FileParser
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/', methods=['POST'])
-def handle_text():
+def parse_text():
     try:
         file = request.files['file']
+        print(file)
         _, file_extension = splitext(file.filename.lower())
         
         match file_extension:
@@ -19,7 +22,7 @@ def handle_text():
             case _:
                 return jsonify({"status": "error", "message": "Unsupported content type"}), 400
         
-        worker = NLPWorker(text)
+        worker = NlpWorker(text)
         tree = worker.build_tree()
         data = worker.extract_info_from_tree(tree)
         
