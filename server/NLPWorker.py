@@ -89,8 +89,10 @@ class NlpWorker:
                 return {'origin': word, 'tag': tag, 'lemma': NlpWorker.lemmatize(word, tag)}
             
         data = [recursion(subtree) for subtree in tree]
-        sorted_data = sorted(data, key=lambda x: x['words'][0]['origin'] if 'words' in x else x.get('origin', ''))
-        return sorted_data
+        chunks = [item for item in data if 'role' in item]
+        sorted_chunks = sorted(chunks, key=lambda x: x['words'][0]['origin'] if 'words' in x else x.get('origin', ''))
+        
+        return sorted_chunks
 
 def test():
     # sentence = "The cat in the hat is sleeping."

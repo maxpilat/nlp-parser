@@ -1,4 +1,71 @@
-<div class="max-w-2xl mx-auto mt-6 px-4">
+<div class="max-w-2xl mx-auto my-6 px-4">
   <h1 class="text-4xl font-mono">{{ title | titlecase }}</h1>
-  <input type="file" class="mt-4" (change)="onFileSelected($event)" />
+
+  <div class="flex items-center justify-center w-full mt-4">
+    <label
+      for="dropzone-file"
+      class="flex flex-col items-center justify-center w-full h-36 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-100"
+    >
+      <div class="flex flex-col items-center justify-center pt-5 pb-6">
+        <svg
+          class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 16"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+          />
+        </svg>
+        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+          <span class="font-semibold">Click to upload</span> or drag and drop
+        </p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">TXT, RTF</p>
+      </div>
+      <input
+        id="dropzone-file"
+        type="file"
+        class="hidden"
+        (change)="onFileSelected($event)"
+      />
+    </label>
+  </div>
+
+  <div *ngIf="sentence" class="mt-4 border p-2">{{ sentence }}</div>
+
+  <div class="flex items-start gap-4">
+    <table *ngIf="chunks.length > 0" class="table-auto mt-4">
+      <thead>
+        <tr>
+          <th class="px-4 py-2 border">Role</th>
+          <th class="px-4 py-2 border">Chunk</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let chunk of chunks">
+        <td class="px-4 py-2 border">{{ chunk.role }}</td>
+        <td class="px-4 py-2 border">
+          <span
+            class="cursor-pointer hover:bg-gray-200"
+            *ngFor="let word of chunk.words"
+            (mouseover)="showTooltip(word)"
+            (mouseout)="hideTooltip()"
+          >
+            {{ word.origin }}
+          </span>
+        </td>
+      </tr>
+    </table>
+
+    <div *ngIf="tooltip" class="mt-4 bg-white border p-2">
+      <p><span class="font-bold">Lemma: </span>{{ tooltip.lemma }}</p>
+      <p><span class="font-bold">Tag: </span>{{ tooltip.tag }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="mt-4">Loading...</div>
 </div>
