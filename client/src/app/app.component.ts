@@ -2,13 +2,12 @@ import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NlpService } from '../services/nlp.service';
-import { IChunk, IWord, PosTags } from '../models/chunk';
-import { Chunk } from '../components/chunk/chunk.component';
+import { ChunkRoles, IChunk, IWord, PosTags } from '../models/chunk';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TitleCasePipe, Chunk, NgFor, NgIf],
+  imports: [RouterOutlet, TitleCasePipe, NgFor, NgIf],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
@@ -18,6 +17,7 @@ export class AppComponent {
   isLoading = false;
   tooltip: IWord | null = null;
   posTags = PosTags;
+  chunkRoles = ChunkRoles;
 
   constructor(private nlpService: NlpService) {}
 
@@ -36,8 +36,6 @@ export class AppComponent {
           };
           this.sentence = originalText;
           this.chunks = chunks;
-
-          console.log(value);
         },
         error: (err) => console.error('File parsing error:', err),
         complete: () => {
