@@ -2,7 +2,7 @@ import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NlpService } from '../services/nlp.service';
-import { IChunk, IWord } from '../models/chunk';
+import { IChunk, IWord, PosTags } from '../models/chunk';
 import { Chunk } from '../components/chunk/chunk.component';
 
 @Component({
@@ -17,6 +17,7 @@ export class AppComponent {
   sentence: string;
   isLoading = false;
   tooltip: IWord | null = null;
+  posTags = PosTags;
 
   constructor(private nlpService: NlpService) {}
 
