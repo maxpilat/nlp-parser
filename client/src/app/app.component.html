@@ -36,40 +36,42 @@
     </label>
   </div>
 
-  <div *ngIf="sentence" class="mt-4 border p-2">
-    {{ sentence }}
-  </div>
+  <ng-container *ngIf="!isLoading">
+    <div *ngIf="sentence" class="mt-4 border p-2">
+      {{ sentence }}
+    </div>
 
-  <table
-    *ngIf="chunks.length > 0"
-    class="table-auto border mt-4 w-full"
-    style="border-radius: 80px"
-  >
-    <thead>
-      <tr>
-        <th class="px-4 py-2 border">Role</th>
-        <th class="px-4 py-2 border">Chunk</th>
+    <table
+      *ngIf="chunks.length > 0"
+      class="table-auto border mt-4 w-full"
+      style="border-radius: 80px"
+    >
+      <thead>
+        <tr>
+          <th class="px-4 py-2 border">Role</th>
+          <th class="px-4 py-2 border">Chunk</th>
+        </tr>
+      </thead>
+      <tr *ngFor="let chunk of chunks">
+        <td class="px-4 py-2 border">{{ chunkRoles[chunk.role] }}</td>
+        <td class="px-4 py-2 border">
+          <span
+            class="cursor-pointer hover:bg-gray-200"
+            *ngFor="let word of chunk.words"
+            (mouseover)="showTooltip(word)"
+            (mouseout)="hideTooltip()"
+          >
+            {{ word.origin }}
+          </span>
+        </td>
       </tr>
-    </thead>
-    <tr *ngFor="let chunk of chunks">
-      <td class="px-4 py-2 border">{{ chunkRoles[chunk.role] }}</td>
-      <td class="px-4 py-2 border">
-        <span
-          class="cursor-pointer hover:bg-gray-200"
-          *ngFor="let word of chunk.words"
-          (mouseover)="showTooltip(word)"
-          (mouseout)="hideTooltip()"
-        >
-          {{ word.origin }}
-        </span>
-      </td>
-    </tr>
-  </table>
+    </table>
 
-  <div *ngIf="tooltip" class="mt-4 bg-white border p-2">
-    <p><span class="font-bold">Lemma: </span>{{ tooltip.lemma }}</p>
-    <p><span class="font-bold">Tag: </span>{{ posTags[tooltip.tag] }}</p>
-  </div>
+    <div *ngIf="tooltip" class="mt-4 bg-white border p-2">
+      <p><span class="font-bold">Lemma: </span>{{ tooltip.lemma }}</p>
+      <p><span class="font-bold">Tag: </span>{{ posTags[tooltip.tag] }}</p>
+    </div>
+  </ng-container>
 
   <div *ngIf="isLoading" class="mt-4">Loading...</div>
 </div>
