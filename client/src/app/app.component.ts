@@ -49,14 +49,6 @@ export class AppComponent {
     return words.map((word) => word.origin).join(' ');
   }
 
-  showTooltip(word: IWord) {
-    this.toolbox = word;
-  }
-
-  hideTooltip() {
-    this.toolbox = null;
-  }
-
   downloadFile() {
     const jsonContent = JSON.stringify(this.chunks, null, 2);
     const blob = new Blob([jsonContent], { type: 'application/json' });
