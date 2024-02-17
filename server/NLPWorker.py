@@ -106,4 +106,4 @@ def test():
     info = nlp_worker.extract_info_from_tree(tree)
     print('\n', info)
 
-# test()
+test()

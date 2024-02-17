@@ -47,10 +47,10 @@ export enum ChunkRoles {
 export interface IWord {
   lemma: string;
   origin: string;
-  tag: keyof typeof PosTags;
+  tag: PosTags;
 }
 
 export interface IChunk {
-  role: keyof typeof ChunkRoles;
+  role: ChunkRoles;
   words: IWord[];
 }

@@ -3,3 +3,5 @@ Werkzeug>=2.1.0
 python-docx==0.8.11
 aspose-words>=24.1.0
 striprtf
+inflect
+flask_cors
