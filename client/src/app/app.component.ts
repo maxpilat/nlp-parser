@@ -2,6 +2,7 @@ import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NlpService } from '../services/nlp.service';
+import { ModalService } from '../services/modal.service';
 import { ChunkRoles, IChunk, IWord, PosTags } from '../models/chunk';
 
 @Component({
@@ -19,7 +20,10 @@ export class AppComponent {
   posTags = PosTags;
   chunkRoles = ChunkRoles;
 
-  constructor(private nlpService: NlpService) {}
+  constructor(
+    private nlpService: NlpService,
+    public modalService: ModalService
+  ) {}
 
   onFileSelected(event: Event) {
     const inputElement = event.target as HTMLInputElement;
@@ -45,10 +49,6 @@ export class AppComponent {
     }
   }
 
-  concatenateWords(words: IWord[]) {
-    return words.map((word) => word.origin).join(' ');
-  }
-
   downloadFile() {
     const jsonContent = JSON.stringify(this.chunks, null, 2);
     const blob = new Blob([jsonContent], { type: 'application/json' });
@@ -60,11 +60,11 @@ export class AppComponent {
     document.body.removeChild(a);
   }
 
-  filterChunks() {
-    console.log('filter');
+  onFilterChunks() {
+    this.modalService.openModal('FilterChunksModal');
   }
 
-  info() {
-    console.log('info');
+  onInfo() {
+    this.modalService.openModal('InfoModal');
   }
 }
