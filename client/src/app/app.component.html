@@ -36,7 +36,7 @@
     </label>
   </div>
 
-  <ng-container *ngIf="!isLoading && chunks.length > 0">
+  <ng-container *ngIf="!isLoading && chunks">
     <div class="mt-4 border p-2">
       {{ sentence }}
     </div>
@@ -71,7 +71,7 @@
         </svg>
       </div>
       <div
-        (click)="onFilterChunks()"
+        (click)="modalService.openModal('FilterChunksModal')"
         class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
       >
         <svg
@@ -133,7 +133,7 @@
           <th class="px-4 py-2 border">Chunk</th>
         </tr>
       </thead>
-      <tr *ngFor="let chunk of chunks">
+      <tr *ngFor="let chunk of filterChunks()">
         <td class="px-4 py-2 border">{{ chunk.role }}</td>
         <td class="px-4 py-2 border">
           <span
@@ -164,4 +164,8 @@
   </ng-container>
 
   <div *ngIf="isLoading" class="mt-4">Loading...</div>
+
+  <app-chunk-filter-modal
+    *ngIf="modalService.state.get('FilterChunksModal')"
+  ></app-chunk-filter-modal>
 </div>

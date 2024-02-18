@@ -4,25 +4,27 @@ import { RouterOutlet } from '@angular/router';
 import { NlpService } from '../services/nlp.service';
 import { ModalService } from '../services/modal.service';
 import { ChunkRoles, IChunk, IWord, PosTags } from '../models/chunk';
+import { ChunkFilterModal } from '../components/chunk-filter-modal/chunk-filter-modal.component';
+import { ChunkFilterService } from '../services/chunk-filter.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TitleCasePipe, NgFor, NgIf],
+  imports: [RouterOutlet, TitleCasePipe, NgFor, NgIf, ChunkFilterModal],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
   title = 'nlp parser';
-  chunks: IChunk[] = [];
+  chunks: IChunk[];
   sentence: string;
   isLoading = false;
   toolbox: IWord | null = null;
   posTags = PosTags;
-  chunkRoles = ChunkRoles;
 
   constructor(
     private nlpService: NlpService,
-    public modalService: ModalService
+    public modalService: ModalService,
+    public chunkFilterService: ChunkFilterService
   ) {}
 
   onFileSelected(event: Event) {
@@ -60,8 +62,12 @@ export class AppComponent {
     document.body.removeChild(a);
   }
 
-  onFilterChunks() {
-    this.modalService.openModal('FilterChunksModal');
+  filterChunks() {
+    return this.chunks.filter((chunk) =>
+      this.chunkFilterService.roles.find(
+        (role) => role.role === chunk.role && role.isSelected
+      )
+    );
   }
 
   onInfo() {
