@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NlpService } from '../services/nlp.service';
 import { ModalService } from '../services/modal.service';
-import { ChunkRoles, IChunk, IWord, PosTags } from '../models/chunk';
+import { IChunk, IWord, PosTags } from '../models/chunk';
 import { ChunkFilterModal } from '../components/chunk-filter-modal/chunk-filter-modal.component';
 import { ChunkFilterService } from '../services/chunk-filter.service';
 
