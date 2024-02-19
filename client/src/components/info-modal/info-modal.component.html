@@ -1,1 +1,41 @@
-<p>info-modal works!</p>
+<div
+  (click)="modalService.closeModal()"
+  class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40"
+>
+  <div class="h-full flex items-center justify-center">
+    <div
+      (click)="$event.stopPropagation()"
+      class="bg-white min-w-72 max-h-96 overflow-scroll"
+    >
+      <div class="p-3 flex w-full sticky top-0 bg-white">
+        <img
+          (click)="modalService.closeModal()"
+          class="w-4 cursor-pointer active:scale-90"
+          src="../../assets/close.png"
+          alt="close"
+        />
+      </div>
+      <div class="p-8 pt-2">
+        <h1 class="font-bold leading-4">{{ "info" | titlecase }}</h1>
+        <div class="mt-4">
+          <h2 class="mt-2">{{ "Roles:" }}</h2>
+          <ul class="mt-2">
+            @for (role of roles | keyvalue; track role) {
+            <li class="leading-relaxed">
+              {{ role.key + " - " + role.value }}
+            </li>
+            }
+          </ul>
+          <h2 class="mt-2">{{ "Tags:" }}</h2>
+          <ul class="mt-2">
+            @for (tag of tags | keyvalue; track tag) {
+            <li class="leading-relaxed">
+              {{ tag.key + " - " + tag.value }}
+            </li>
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

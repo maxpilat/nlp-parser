@@ -4,19 +4,13 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ModalService {
-  state = new Map<string, boolean>();
+  state: string | null = null;
 
   openModal(modal: string) {
-    this.closeModal();
-    this.state.set(modal, true);
+    this.state = modal;
   }
 
   closeModal() {
-    for (let [key, value] of this.state) {
-      if (value) {
-        this.state.set(key, false);
-        break;
-      }
-    }
+    this.state = null;
   }
 }

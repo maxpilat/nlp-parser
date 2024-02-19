@@ -7,22 +7,8 @@
       class="flex flex-col items-center justify-center w-full h-36 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-100"
     >
       <div class="flex flex-col items-center justify-center pt-5 pb-6">
-        <svg
-          class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 20 16"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-          />
-        </svg>
-        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+        <img src="../assets/upload.png" alt="upload" class="w-8" />
+        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
           <span class="font-semibold">Click to upload</span> or drag and drop
         </p>
         <p class="text-xs text-gray-500 dark:text-gray-400">TXT, RTF</p>
@@ -46,83 +32,19 @@
         (click)="downloadFile()"
         class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
       >
-        <svg
-          class="w-6"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          stroke="#6b7280"
-        >
-          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-          <g
-            id="SVGRepo_tracerCarrier"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ></g>
-          <g id="SVGRepo_iconCarrier">
-            <path
-              d="M17 17H17.01M17.4 14H18C18.9319 14 19.3978 14 19.7654 14.1522C20.2554 14.3552 20.6448 14.7446 20.8478 15.2346C21 15.6022 21 16.0681 21 17C21 17.9319 21 18.3978 20.8478 18.7654C20.6448 19.2554 20.2554 19.6448 19.7654 19.8478C19.3978 20 18.9319 20 18 20H6C5.06812 20 4.60218 20 4.23463 19.8478C3.74458 19.6448 3.35523 19.2554 3.15224 18.7654C3 18.3978 3 17.9319 3 17C3 16.0681 3 15.6022 3.15224 15.2346C3.35523 14.7446 3.74458 14.3552 4.23463 14.1522C4.60218 14 5.06812 14 6 14H6.6M12 15V4M12 15L9 12M12 15L15 12"
-              stroke="#6b7280"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            ></path>
-          </g>
-        </svg>
+        <img src="../assets/download.png" alt="download" class="w-5" />
       </div>
       <div
         (click)="modalService.openModal('FilterChunksModal')"
         class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
       >
-        <svg
-          class="w-6"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-          <g
-            id="SVGRepo_tracerCarrier"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ></g>
-          <g id="SVGRepo_iconCarrier">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M15 10.5A3.502 3.502 0 0 0 18.355 8H21a1 1 0 1 0 0-2h-2.645a3.502 3.502 0 0 0-6.71 0H3a1 1 0 0 0 0 2h8.645A3.502 3.502 0 0 0 15 10.5zM3 16a1 1 0 1 0 0 2h2.145a3.502 3.502 0 0 0 6.71 0H21a1 1 0 1 0 0-2h-9.145a3.502 3.502 0 0 0-6.71 0H3z"
-              fill="#6b7280"
-            ></path>
-          </g>
-        </svg>
+        <img src="../assets/filter.png" alt="filter" class="w-5" />
       </div>
       <div
-        (click)="onInfo()"
+        (click)="modalService.openModal('InfoModal')"
         class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
       >
-        <svg
-          class="w-6"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          stroke="#6b7280"
-          stroke-width="0.36"
-        >
-          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-          <g
-            id="SVGRepo_tracerCarrier"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          ></g>
-          <g id="SVGRepo_iconCarrier">
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M12 7C12.8284 7 13.5 6.32843 13.5 5.5C13.5 4.67157 12.8284 4 12 4C11.1716 4 10.5 4.67157 10.5 5.5C10.5 6.32843 11.1716 7 12 7ZM11 9C10.4477 9 10 9.44772 10 10C10 10.5523 10.4477 11 11 11V19C11 19.5523 11.4477 20 12 20C12.5523 20 13 19.5523 13 19V10C13 9.44772 12.5523 9 12 9H11Z"
-              fill="#6b7280"
-            ></path>
-          </g>
-        </svg>
+        <img src="../assets/question.png" alt="info" class="w-5" />
       </div>
     </div>
 
@@ -165,7 +87,7 @@
 
   <div *ngIf="isLoading" class="mt-4">Loading...</div>
 
-  <app-chunk-filter-modal
-    *ngIf="modalService.state.get('FilterChunksModal')"
-  ></app-chunk-filter-modal>
+  <app-chunk-filter-modal *ngIf="modalService.state === 'FilterChunksModal'" />
+
+  <app-info-modal *ngIf="modalService.state === 'InfoModal'" />
 </div>

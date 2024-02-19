@@ -6,11 +6,19 @@ import { ModalService } from '../services/modal.service';
 import { IChunk, IWord, PosTags } from '../models/chunk';
 import { ChunkFilterModal } from '../components/chunk-filter-modal/chunk-filter-modal.component';
 import { ChunkFilterService } from '../services/chunk-filter.service';
+import { InfoModal } from '../components/info-modal/info-modal.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, TitleCasePipe, NgFor, NgIf, ChunkFilterModal],
+  imports: [
+    RouterOutlet,
+    TitleCasePipe,
+    NgFor,
+    NgIf,
+    ChunkFilterModal,
+    InfoModal,
+  ],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
