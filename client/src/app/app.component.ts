@@ -1,9 +1,8 @@
 import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { NlpService } from '../services/nlp.service';
 import { ModalService } from '../services/modal.service';
-import { IChunk, IWord, PosTags } from '../models/chunk';
+import { IChunk, IWord } from '../models/chunk';
 import { ChunkFilterModal } from '../components/chunk-filter-modal/chunk-filter-modal.component';
 import { ChunkFilterService } from '../services/chunk-filter.service';
 import { InfoModal } from '../components/info-modal/info-modal.component';
@@ -11,14 +10,7 @@ import { InfoModal } from '../components/info-modal/info-modal.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    RouterOutlet,
-    TitleCasePipe,
-    NgFor,
-    NgIf,
-    ChunkFilterModal,
-    InfoModal,
-  ],
+  imports: [TitleCasePipe, NgFor, NgIf, ChunkFilterModal, InfoModal],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
@@ -27,7 +19,6 @@ export class AppComponent {
   sentence: string;
   isLoading = false;
   toolbox: IWord | null = null;
-  posTags = PosTags;
 
   constructor(
     private nlpService: NlpService,

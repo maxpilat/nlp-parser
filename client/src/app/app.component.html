@@ -36,9 +36,13 @@
       </div>
       <div
         (click)="modalService.openModal('FilterChunksModal')"
-        class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
+        class="relative border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
       >
         <img src="../assets/filter.png" alt="filter" class="w-5" />
+        <div
+          *ngIf="chunkFilterService.isSelected()"
+          class="absolute w-3 h-3 rounded-lg bg-gray-600 -top-1 -right-1"
+        ></div>
       </div>
       <div
         (click)="modalService.openModal('InfoModal')"

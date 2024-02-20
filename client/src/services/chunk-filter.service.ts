@@ -16,4 +16,8 @@ export class ChunkFilterService {
       });
     });
   }
+
+  isSelected() {
+    return this.roles.some((role) => !role.isSelected);
+  }
 }
