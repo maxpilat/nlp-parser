@@ -1,20 +1,23 @@
 <div class="absolute top-0 left-0 w-full h-full bg-black bg-opacity-40">
   <div class="h-full flex items-center justify-center">
-    <div class="bg-white p-4 min-w-72">
-      <h1 class="font-bold leading-4">{{ "chunk filter" | titlecase }}</h1>
-      <ul class="p-2 mt-2">
-        @for (role of chunkFilterService.roles; track role; let i = $index) {
-        <li class="leading-relaxed">
-          <input
-            id="{{ role.role }}"
-            class="mr-1"
-            type="checkbox"
-            [checked]="chunkFilterService.roles[i].isSelected"
-          />
-          {{ role.role }}
-        </li>
-        }
-      </ul>
+    <div class="bg-white min-w-72 p-4">
+      <div class="p-2">
+        <h1 class="font-bold leading-4">{{ "chunk filter" | titlecase }}</h1>
+        <hr class="my-4" />
+        <ul>
+          @for (role of chunkFilterService.roles; track role; let i = $index) {
+          <li class="leading-relaxed">
+            <input
+              id="{{ role.role }}"
+              class="mr-1"
+              type="checkbox"
+              [checked]="chunkFilterService.roles[i].isSelected"
+            />
+            {{ role.role }}
+          </li>
+          }
+        </ul>
+      </div>
 
       <div class="flex justify-end gap-2 mt-2">
         <button

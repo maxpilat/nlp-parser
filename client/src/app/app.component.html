@@ -1,7 +1,7 @@
 <div class="max-w-2xl mx-auto my-6 px-4">
   <h1 class="text-4xl font-mono">{{ title | titlecase }}</h1>
 
-  <div class="flex items-center justify-center w-full mt-6">
+  <div title="upload" class="flex items-center justify-center w-full mt-6">
     <label
       for="dropzone-file"
       class="flex flex-col items-center justify-center w-full h-36 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-100"
@@ -31,12 +31,14 @@
       <div
         (click)="downloadFile()"
         class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
+        title="download"
       >
         <img src="../assets/download.png" alt="download" class="w-5" />
       </div>
       <div
         (click)="modalService.openModal('FilterChunksModal')"
         class="relative border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
+        title="filter chunks"
       >
         <img src="../assets/filter.png" alt="filter" class="w-5" />
         <div
@@ -47,6 +49,7 @@
       <div
         (click)="modalService.openModal('InfoModal')"
         class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
+        title="info"
       >
         <img src="../assets/question.png" alt="info" class="w-5" />
       </div>

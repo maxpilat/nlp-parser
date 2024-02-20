@@ -15,26 +15,27 @@
           alt="close"
         />
       </div>
+
       <div class="p-8 pt-2">
         <h1 class="font-bold leading-4">{{ "info" | titlecase }}</h1>
-        <div class="mt-4">
-          <h2 class="mt-2">{{ "Roles:" }}</h2>
-          <ul class="mt-2">
-            @for (role of roles | keyvalue; track role) {
-            <li class="leading-relaxed">
-              {{ role.key + " - " + role.value }}
-            </li>
-            }
-          </ul>
-          <h2 class="mt-2">{{ "Tags:" }}</h2>
-          <ul class="mt-2">
-            @for (tag of tags | keyvalue; track tag) {
-            <li class="leading-relaxed">
-              {{ tag.key + " - " + tag.value }}
-            </li>
-            }
-          </ul>
-        </div>
+        <hr class="my-4" />
+        <h2>{{ "Roles:" }}</h2>
+        <ul class="mt-2">
+          @for (role of roles | keyvalue; track role) {
+          <li class="leading-relaxed">
+            {{ role.key + " - " + role.value }}
+          </li>
+          }
+        </ul>
+        <hr class="my-4" />
+        <h2>{{ "Tags:" }}</h2>
+        <ul class="mt-2">
+          @for (tag of tags | keyvalue; track tag) {
+          <li class="leading-relaxed">
+            {{ tag.key + " - " + tag.value }}
+          </li>
+          }
+        </ul>
       </div>
     </div>
   </div>
