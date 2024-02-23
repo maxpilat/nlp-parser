@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 
-type TState = { status?: number; message: string };
+type IState = { status?: number; message: string };
 
 @Injectable({
   providedIn: 'root',
 })
 export class ErrorService {
-  private state: TState | null = null;
+  private state: IState | null = null;
 
-  setTempState(state: TState, duration: number = 3000) {
+  setTempState(state: IState, duration: number = 3000) {
     this.state = state;
     setTimeout(() => {
       this.state = null;

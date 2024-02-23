@@ -25,7 +25,7 @@ def parse_text():
         worker = NlpWorker(text)
         tree = worker.build_tree()
         chunks = worker.extract_info_from_tree(tree)
-        data = { 'originalText': worker.sentence, 'chunks': chunks }
+        data = { 'sentence': worker.sentence, 'chunks': chunks }
         
         return data
     except Exception as err:

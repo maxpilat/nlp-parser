@@ -1,6 +1,6 @@
 import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { NlpService } from '../services/nlp.service';
+import { NlpService, INlpResponse } from '../services/nlp.service';
 import { ModalService } from '../services/modal.service';
 import { IChunk, IWord } from '../models/chunk';
 import { ChunkFilterModal } from '../components/chunk-filter-modal/chunk-filter-modal.component';
@@ -8,6 +8,7 @@ import { ChunkFilterService } from '../services/chunk-filter.service';
 import { InfoModal } from '../components/info-modal/info-modal.component';
 import { ErrorService } from '../services/error.service';
 import { finalize } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -43,15 +44,11 @@ export class AppComponent {
           })
         )
         .subscribe({
-          next: (value) => {
-            const { originalText, chunks } = value as {
-              originalText: string;
-              chunks: IChunk[];
-            };
-            this.sentence = originalText;
-            this.chunks = chunks;
+          next: (value: INlpResponse) => {
+            this.sentence = value.sentence;
+            this.chunks = value.chunks;
           },
-          error: (err) => {
+          error: (err: HttpErrorResponse) => {
             this.chunks = [];
             this.errorService.setTempState({
               status: err.status,
