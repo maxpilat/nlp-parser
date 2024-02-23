@@ -5,13 +5,14 @@
         <h1 class="font-bold leading-4">{{ "chunk filter" | titlecase }}</h1>
         <hr class="my-4" />
         <ul>
-          @for (role of chunkFilterService.roles; track role; let i = $index) {
+          @for (role of chunkFilterService.getRoles(); track role; let i =
+          $index) {
           <li class="leading-relaxed">
             <input
               id="{{ role.role }}"
               class="mr-1"
               type="checkbox"
-              [checked]="chunkFilterService.roles[i].isSelected"
+              [checked]="chunkFilterService.getRoles()[i].isSelected"
             />
             {{ role.role }}
           </li>

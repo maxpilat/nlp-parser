@@ -17,7 +17,7 @@ export class ChunkFilterModal {
   ) {}
 
   apply() {
-    this.chunkFilterService.roles.forEach((role) => {
+    this.chunkFilterService.getRoles().forEach((role) => {
       role.isSelected = (
         document.getElementById(role.role) as HTMLInputElement
       ).checked;
