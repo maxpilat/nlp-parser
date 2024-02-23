@@ -22,7 +22,9 @@
     </label>
   </div>
 
-  <ng-container *ngIf="!isLoading && chunks">
+  <ng-container
+    *ngIf="!isLoading && chunks.length > 0 && !errorService.getState()"
+  >
     <div class="mt-4 border p-2">
       {{ sentence }}
     </div>
@@ -92,9 +94,14 @@
     </div>
   </ng-container>
 
-  <div *ngIf="isLoading" class="mt-4">Loading...</div>
+  <div *ngIf="isLoading" class="loader mt-6 mx-auto"></div>
 
-  <app-chunk-filter-modal *ngIf="modalService.state === 'FilterChunksModal'" />
+  <div *ngIf="errorService.getState()" class="mt-4 text-center text-red-500">
+    <span class="font-bold">{{ errorService.getState()?.status }}</span>
+    {{ errorService.getState()?.message }}
+  </div>
 
-  <app-info-modal *ngIf="modalService.state === 'InfoModal'" />
+  <app-chunk-filter-modal *ngIf="modalService.isOpen('FilterChunksModal')" />
+
+  <app-info-modal *ngIf="modalService.isOpen('InfoModal')" />
 </div>

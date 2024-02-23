@@ -16,3 +16,25 @@ h2 {
   font-size: 16px;
   line-height: 1;
 }
+
+.loader {
+  width: fit-content;
+  font-family: monospace;
+  white-space: pre;
+  font-size: 22px;
+  line-height: 1.2em;
+  height: 1.2em;
+  overflow: hidden;
+}
+.loader:before {
+  content: "Loading...\AgodnLai...\Aoiaglni...\ALiongad...\Agindola...\Analoidg...";
+  white-space: pre;
+  display: inline-block;
+  animation: l38 1s infinite steps(6);
+}
+
+@keyframes l38 {
+  100% {
+    transform: translateY(-100%);
+  }
+}

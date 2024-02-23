@@ -6,6 +6,8 @@ import { IChunk, IWord } from '../models/chunk';
 import { ChunkFilterModal } from '../components/chunk-filter-modal/chunk-filter-modal.component';
 import { ChunkFilterService } from '../services/chunk-filter.service';
 import { InfoModal } from '../components/info-modal/info-modal.component';
+import { ErrorService } from '../services/error.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +17,7 @@ import { InfoModal } from '../components/info-modal/info-modal.component';
 })
 export class AppComponent {
   title = 'nlp parser';
-  chunks: IChunk[];
+  chunks: IChunk[] = [];
   sentence: string;
   isLoading = false;
   toolbox: IWord | null = null;
@@ -23,7 +25,8 @@ export class AppComponent {
   constructor(
     private nlpService: NlpService,
     public modalService: ModalService,
-    public chunkFilterService: ChunkFilterService
+    public chunkFilterService: ChunkFilterService,
+    public errorService: ErrorService
   ) {}
 
   onFileSelected(event: Event) {
@@ -33,20 +36,29 @@ export class AppComponent {
       this.isLoading = true;
       const file = inputElement.files[0];
       const upload$ = this.nlpService.parseFile(file);
-      upload$.subscribe({
-        next: (value) => {
-          const { originalText, chunks } = value as {
-            originalText: string;
-            chunks: IChunk[];
-          };
-          this.sentence = originalText;
-          this.chunks = chunks;
-        },
-        error: (err) => console.error('File parsing error:', err),
-        complete: () => {
-          this.isLoading = false;
-        },
-      });
+      upload$
+        .pipe(
+          finalize(() => {
+            this.isLoading = false;
+          })
+        )
+        .subscribe({
+          next: (value) => {
+            const { originalText, chunks } = value as {
+              originalText: string;
+              chunks: IChunk[];
+            };
+            this.sentence = originalText;
+            this.chunks = chunks;
+          },
+          error: (err) => {
+            this.chunks = [];
+            this.errorService.setTempState({
+              status: err.status,
+              message: err.error.message,
+            });
+          },
+        });
     }
   }
 
@@ -63,9 +75,9 @@ export class AppComponent {
 
   filterChunks() {
     return this.chunks.filter((chunk) =>
-      this.chunkFilterService.roles.find(
-        (role) => role.role === chunk.role && role.isSelected
-      )
+      this.chunkFilterService
+        .getRoles()
+        .find((role) => role.role === chunk.role && role.isSelected)
     );
   }
 

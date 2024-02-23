@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class ModalService {
-  state: string | null = null;
+  private state: string | null = null;
 
   openModal(modal: string) {
     this.state = modal;
@@ -12,5 +12,9 @@ export class ModalService {
 
   closeModal() {
     this.state = null;
+  }
+
+  isOpen(modalName: string) {
+    return this.state === modalName;
   }
 }

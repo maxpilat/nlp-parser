@@ -5,7 +5,7 @@ import { ChunkRoles } from '../models/chunk';
   providedIn: 'root',
 })
 export class ChunkFilterService {
-  roles: { role: ChunkRoles; isSelected: boolean }[] = [];
+  private roles: { role: ChunkRoles; isSelected: boolean }[] = [];
 
   constructor() {
     const keys = Object.keys(ChunkRoles) as ChunkRoles[];
@@ -15,6 +15,10 @@ export class ChunkFilterService {
         isSelected: true,
       });
     });
+  }
+
+  getRoles() {
+    return this.roles;
   }
 
   isSelected() {
