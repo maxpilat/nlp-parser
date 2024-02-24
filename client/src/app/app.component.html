@@ -1,107 +1,113 @@
-<div class="max-w-2xl mx-auto my-6 px-4">
-  <h1 class="text-4xl font-mono">{{ title | titlecase }}</h1>
-
-  <div title="upload" class="flex items-center justify-center w-full mt-6">
-    <label
-      for="dropzone-file"
-      class="flex flex-col items-center justify-center w-full h-36 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-100"
-    >
-      <div class="flex flex-col items-center justify-center pt-5 pb-6">
-        <img src="../assets/upload.png" alt="upload" class="w-8" />
-        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-          <span class="font-semibold">Click to upload</span> or drag and drop
-        </p>
-        <p class="text-xs text-gray-500 dark:text-gray-400">TXT, RTF</p>
-      </div>
-      <input
-        id="dropzone-file"
-        type="file"
-        class="hidden"
-        (change)="onFileSelected($event)"
-      />
-    </label>
-  </div>
-
-  <ng-container
-    *ngIf="!isLoading && chunks.length > 0 && !errorService.getState()"
+<div class="max-w-3xl mx-auto my-4 px-4">
+  <div
+    class="bg-white py-4 px-8 border rounded-full shadow-md sticky top-4 z-10"
   >
-    <div class="mt-4 border p-2">
-      {{ sentence }}
-    </div>
-
-    <div class="mt-4 flex gap-2">
-      <div
-        (click)="downloadFile()"
-        class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
-        title="download"
-      >
-        <img src="../assets/download.png" alt="download" class="w-5" />
-      </div>
-      <div
-        (click)="modalService.openModal('FilterChunksModal')"
-        class="relative border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
-        title="filter chunks"
-      >
-        <img src="../assets/filter.png" alt="filter" class="w-5" />
-        <div
-          *ngIf="chunkFilterService.isSelected()"
-          class="absolute w-3 h-3 rounded-lg bg-gray-600 -top-1 -right-1"
-        ></div>
-      </div>
-      <div
-        (click)="modalService.openModal('InfoModal')"
-        class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
-        title="info"
-      >
-        <img src="../assets/question.png" alt="info" class="w-5" />
-      </div>
-    </div>
-
-    <table class="table-auto border mt-4 w-full" style="border-radius: 80px">
-      <thead>
-        <tr>
-          <th class="px-4 py-2 border">Role</th>
-          <th class="px-4 py-2 border">Chunk</th>
-        </tr>
-      </thead>
-      <tr *ngFor="let chunk of filterChunks()">
-        <td class="px-4 py-2 border">{{ chunk.role }}</td>
-        <td class="px-4 py-2 border">
-          <span
-            class="cursor-pointer hover:bg-gray-200"
-            *ngFor="let word of chunk.words"
-            (mouseover)="toolbox = word"
-            (mouseout)="toolbox = null"
-          >
-            {{ word.origin }}
-          </span>
-        </td>
-      </tr>
-    </table>
-
-    <div class="mt-4 bg-white border p-2">
-      <ng-container *ngIf="toolbox; else noToolbox">
-        <p>
-          <span class="font-bold">Lemma: </span>
-          {{ toolbox.lemma }}
-        </p>
-        <p>
-          <span class="font-bold">Tag: </span>
-          {{ toolbox.tag }}
-        </p>
-      </ng-container>
-      <ng-template #noToolbox> Point to a chunk from the table... </ng-template>
-    </div>
-  </ng-container>
-
-  <div *ngIf="isLoading" class="loader mt-6 mx-auto"></div>
-
-  <div *ngIf="errorService.getState()" class="mt-4 text-center text-red-500">
-    <span class="font-bold">{{ errorService.getState()?.status }}</span>
-    {{ errorService.getState()?.message }}
+    <h1 class="text-xl font-mono">{{ title | titlecase }}</h1>
   </div>
 
-  <app-chunk-filter-modal *ngIf="modalService.isOpen('FilterChunksModal')" />
+  <div class="max-w-2xl mx-auto mt-6">
+    <div title="upload" class="flex items-center justify-center w-full">
+      <label
+        for="dropzone-file"
+        class="flex flex-col items-center justify-center w-full h-36 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-100"
+      >
+        <div class="flex flex-col items-center justify-center pt-5 pb-6">
+          <img src="../assets/upload.png" alt="upload" class="w-8" />
+          <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+            <span class="font-semibold">Click to upload</span> or drag and drop
+          </p>
+          <p class="text-xs text-gray-500 dark:text-gray-400">TXT, RTF</p>
+        </div>
+        <input
+          id="dropzone-file"
+          type="file"
+          class="hidden"
+          (change)="onFileSelected($event)"
+        />
+      </label>
+    </div>
 
-  <app-info-modal *ngIf="modalService.isOpen('InfoModal')" />
+    <div *ngIf="!isLoading && chunks.length > 0 && !errorService.getState()">
+      <div class="mt-4 border p-2">
+        {{ sentence }}
+      </div>
+
+      <div class="mt-4 flex gap-2">
+        <div
+          (click)="downloadFile()"
+          class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
+          title="download"
+        >
+          <img src="../assets/download.png" alt="download" class="w-5" />
+        </div>
+        <div
+          (click)="modalService.openModal('FilterChunksModal')"
+          class="relative border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
+          title="filter chunks"
+        >
+          <img src="../assets/filter.png" alt="filter" class="w-5" />
+          <div
+            *ngIf="chunkFilterService.isSelected()"
+            class="absolute w-3 h-3 rounded-lg bg-gray-600 -top-1 -right-1"
+          ></div>
+        </div>
+        <div
+          (click)="modalService.openModal('InfoModal')"
+          class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
+          title="info"
+        >
+          <img src="../assets/question.png" alt="info" class="w-5" />
+        </div>
+      </div>
+
+      <table class="table-auto border mt-4 w-full" style="border-radius: 80px">
+        <thead>
+          <tr>
+            <th class="px-4 py-2 border">Role</th>
+            <th class="px-4 py-2 border">Chunk</th>
+          </tr>
+        </thead>
+        <tr *ngFor="let chunk of filterChunks()">
+          <td class="px-4 py-2 border">{{ chunk.role }}</td>
+          <td class="px-4 py-2 border">
+            <span
+              class="cursor-pointer hover:bg-gray-200"
+              *ngFor="let word of chunk.words"
+              (mouseover)="toolbox = word"
+              (mouseout)="toolbox = null"
+            >
+              {{ word.origin }}
+            </span>
+          </td>
+        </tr>
+      </table>
+
+      <div class="mt-4 bg-white border p-2">
+        <ng-container *ngIf="toolbox; else noToolbox">
+          <p>
+            <span class="font-bold">Lemma: </span>
+            {{ toolbox.lemma }}
+          </p>
+          <p>
+            <span class="font-bold">Tag: </span>
+            {{ toolbox.tag }}
+          </p>
+        </ng-container>
+        <ng-template #noToolbox>
+          Point to a chunk from the table...
+        </ng-template>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="loader mt-6 mx-auto"></div>
+
+    <div *ngIf="errorService.getState()" class="mt-4 text-center text-red-500">
+      <span class="font-bold">{{ errorService.getState()?.status }}</span>
+      {{ errorService.getState()?.message }}
+    </div>
+
+    <app-chunk-filter-modal *ngIf="modalService.isOpen('FilterChunksModal')" />
+
+    <app-info-modal *ngIf="modalService.isOpen('InfoModal')" />
+  </div>
 </div>
