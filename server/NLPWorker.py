@@ -34,7 +34,7 @@ class NlpWorker:
             return nltk.corpus.wordnet.ADV
         elif tag.startswith('J'):
             return nltk.corpus.wordnet.ADJ
-        return nltk.corpus.wordnet.NOUN  # По умолчанию считаем существительными
+        return nltk.corpus.wordnet.NOUN
     
     # Лемматизация слова
     @staticmethod
@@ -106,4 +106,4 @@ def test():
     info = nlp_worker.extract_info_from_tree(tree)
     print('\n', info)
 
-test()
+# test()
