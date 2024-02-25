@@ -8,10 +8,12 @@ export class ModalService {
 
   openModal(modal: string) {
     this.state = modal;
+    document.body.classList.add('overflow-hidden');
   }
 
   closeModal() {
     this.state = null;
+    document.body.classList.remove('overflow-hidden');
   }
 
   isOpen(modalName: string) {
