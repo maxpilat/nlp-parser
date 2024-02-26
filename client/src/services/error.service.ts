@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-type IState = { status?: number; message: string };
+type IState = { message: string; status?: number };
 
 @Injectable({
   providedIn: 'root',
@@ -17,5 +17,9 @@ export class ErrorService {
 
   getState() {
     return this.state;
+  }
+
+  clearState() {
+    this.state = null;
   }
 }

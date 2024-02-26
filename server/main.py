@@ -1,3 +1,4 @@
+import json
 from posixpath import splitext
 from NlpWorker import NlpWorker
 from FileParser import FileParser
@@ -11,7 +12,6 @@ CORS(app)
 def parse_text():
     try:
         file = request.files['file']
-        print(file)
         _, file_extension = splitext(file.filename.lower())
         
         match file_extension:
@@ -19,6 +19,12 @@ def parse_text():
                 text = FileParser.txt_to_str(file)
             case '.rtf':
                 text = FileParser.rtf_to_str(file)
+            case '.json':
+                text = file.read()
+                data = json.loads(text)
+                if 'sentence' in data and isinstance(data['sentence'], str) and 'chunks' in data and isinstance(data['chunks'], list):
+                    return jsonify(data)
+                return jsonify({"status": "error", "message": "Unsupported content type"}), 400
             case _:
                 return jsonify({"status": "error", "message": "Unsupported content type"}), 400
         
@@ -26,8 +32,8 @@ def parse_text():
         tree = worker.build_tree()
         chunks = worker.extract_info_from_tree(tree)
         data = { 'sentence': worker.sentence, 'chunks': chunks }
-        
-        return data
+
+        return jsonify(data)
     except Exception as err:
         error_response = {"status": "error", "message": str(err)}
         return jsonify(error_response), 500

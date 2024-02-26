@@ -1,0 +1,65 @@
+{
+  "chunks": [
+    {
+      "role": "NP",
+      "words": [
+        {
+          "lemma": "book",
+          "origin": "book",
+          "tag": "NN"
+        }
+      ]
+    },
+    {
+      "role": "VP",
+      "words": [
+        {
+          "lemma": "have",
+          "origin": "have",
+          "tag": "VBP"
+        }
+      ]
+    },
+    {
+      "role": "NP",
+      "words": [
+        {
+          "lemma": "i",
+          "origin": "i",
+          "tag": "PRP"
+        }
+      ]
+    },
+    {
+      "role": "ADJP",
+      "words": [
+        {
+          "lemma": "interesting",
+          "origin": "interesting",
+          "tag": "JJ"
+        }
+      ]
+    },
+    {
+      "role": "ADVP",
+      "words": [
+        {
+          "lemma": "on",
+          "origin": "on",
+          "tag": "IN"
+        },
+        {
+          "lemma": "the",
+          "origin": "the",
+          "tag": "DT"
+        },
+        {
+          "lemma": "shelf",
+          "origin": "shelf",
+          "tag": "NN"
+        }
+      ]
+    }
+  ],
+  "sentence": "I have an interesting book on the shelf."
+}

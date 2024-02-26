@@ -2,7 +2,7 @@ import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { NlpService, INlpResponse } from '../services/nlp.service';
 import { ModalService } from '../services/modal.service';
-import { IChunk, IWord } from '../models/chunk';
+import { IWord } from '../models/chunk';
 import { ChunkFilterModal } from '../components/chunk-filter-modal/chunk-filter-modal.component';
 import { ChunkFilterService } from '../services/chunk-filter.service';
 import { InfoModal } from '../components/info-modal/info-modal.component';
@@ -18,8 +18,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class AppComponent {
   title = 'nlp parser';
-  chunks: IChunk[] = [];
-  sentence: string;
+  data: INlpResponse = { sentence: '', chunks: [] };
   isLoading = false;
   toolbox: IWord | null = null;
 
@@ -30,12 +29,14 @@ export class AppComponent {
     public errorService: ErrorService
   ) {}
 
-  onFileSelected(event: Event) {
+  async onFileSelected(event: Event) {
+    this.errorService.clearState();
     const inputElement = event.target as HTMLInputElement;
 
     if (inputElement.files && inputElement.files.length > 0) {
       this.isLoading = true;
       const file = inputElement.files[0];
+
       const upload$ = this.nlpService.parseFile(file);
       upload$
         .pipe(
@@ -45,11 +46,10 @@ export class AppComponent {
         )
         .subscribe({
           next: (value: INlpResponse) => {
-            this.sentence = value.sentence;
-            this.chunks = value.chunks;
+            this.data = value;
           },
           error: (err: HttpErrorResponse) => {
-            this.chunks = [];
+            this.data.chunks = [];
             this.errorService.setTempState({
               status: err.status,
               message: err.error.message,
@@ -60,7 +60,7 @@ export class AppComponent {
   }
 
   downloadFile() {
-    const jsonContent = JSON.stringify(this.chunks, null, 2);
+    const jsonContent = JSON.stringify(this.data, null, 2);
     const blob = new Blob([jsonContent], { type: 'application/json' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
@@ -71,7 +71,7 @@ export class AppComponent {
   }
 
   filterChunks() {
-    return this.chunks.filter((chunk) =>
+    return this.data.chunks.filter((chunk) =>
       this.chunkFilterService
         .getRoles()
         .find((role) => role.role === chunk.role && role.isSelected)

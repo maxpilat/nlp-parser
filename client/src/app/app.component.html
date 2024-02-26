@@ -27,9 +27,11 @@
       </label>
     </div>
 
-    <div *ngIf="!isLoading && chunks.length > 0 && !errorService.getState()">
+    <div
+      *ngIf="!isLoading && data.chunks.length > 0 && !errorService.getState()"
+    >
       <div class="mt-4 border p-2">
-        {{ sentence }}
+        {{ data.sentence }}
       </div>
 
       <div class="mt-4 flex gap-2">
