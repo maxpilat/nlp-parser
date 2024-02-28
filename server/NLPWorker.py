@@ -51,7 +51,7 @@ class NlpWorker:
 
         return lemma
     
-    # Построить синтаксическое дерево
+    # Построение синтаксического дерева
     def build_tree(self):
         # Разбиение предложения на слова
         words = nltk.word_tokenize(self.sentence)
