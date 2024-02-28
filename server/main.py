@@ -28,10 +28,10 @@ def parse_text():
             case _:
                 return jsonify({"status": "error", "message": "Unsupported content type"}), 400
         
-        worker = NlpWorker(text)
-        tree = worker.build_tree()
-        chunks = worker.extract_info_from_tree(tree)
-        data = { 'sentence': worker.sentence, 'chunks': chunks }
+        nlp_worker = NlpWorker(text)
+        tree = nlp_worker.build_tree()
+        chunks = nlp_worker.extract_info_from_tree(tree)
+        data = { 'sentence': nlp_worker.sentence, 'chunks': chunks }
 
         return jsonify(data)
     except Exception as err:
