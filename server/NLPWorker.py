@@ -1,3 +1,4 @@
+import time
 import nltk
 import inflect
 
@@ -25,10 +26,8 @@ class NlpWorker:
     
     # Определение части речи по тегу
     @staticmethod
-    def get_pos_by_tag(tag):
-        if tag.startswith('N'):
-            return nltk.corpus.wordnet.NOUN
-        elif tag.startswith('V'):
+    def define_part_of_speech(tag):
+        if tag.startswith('V'):
             return nltk.corpus.wordnet.VERB
         elif tag.startswith('R'):
             return nltk.corpus.wordnet.ADV
@@ -40,8 +39,8 @@ class NlpWorker:
     @staticmethod
     def lemmatize(word, tag):
         lemmatizer = nltk.WordNetLemmatizer()
-        lemma = lemmatizer.lemmatize(word, NlpWorker.get_pos_by_tag(tag))
-
+        lemma = lemmatizer.lemmatize(word, NlpWorker.define_part_of_speech(tag))
+        
         # Приводим к единственному числу существительные
         if tag == 'NNS' or tag == 'NNPS':
             inflect_engine = inflect.engine()
@@ -55,9 +54,13 @@ class NlpWorker:
     def build_tree(self):
         # Разбиение предложения на слова
         words = nltk.word_tokenize(self.sentence)
-
+        
         # Определение частей речи для каждого слова
+        start_time = time.time()
         pos_tags = nltk.pos_tag(words)
+        end_time = time.time()
+        pos_tags_time = end_time - start_time
+        print(f"pos_tag took {pos_tags_time} seconds")
 
         # Определение синтаксических правил для синтаксического анализа
         grammar = r"""
@@ -86,7 +89,14 @@ class NlpWorker:
                 # Если узел является листом, добавляем информацию о слове и теге в список
                 word = subtree[0].lower()
                 tag = subtree[1]
-                return {'origin': word, 'tag': tag, 'lemma': NlpWorker.lemmatize(word, tag)}
+                
+                start_time = time.time()
+                lemma = NlpWorker.lemmatize(word, tag)
+                end_time = time.time()
+                lemma_time = end_time - start_time
+                print(f"lemmatize took {lemma_time} seconds")
+                
+                return {'origin': word, 'tag': tag, 'lemma': lemma}
             
         data = [recursion(subtree) for subtree in tree]
         chunks = [item for item in data if 'role' in item]
@@ -99,11 +109,20 @@ def test():
     sentence = "I have an interesting book on the shelf."
 
     nlp_worker = NlpWorker(sentence)
-
+    
+    start_time = time.time()
     tree = nlp_worker.build_tree()
+    end_time = time.time()
+    build_tree_time = end_time - start_time
+    print(f"build_tree took {build_tree_time} seconds")
     tree.pretty_print()
 
-    info = nlp_worker.extract_info_from_tree(tree)
-    print('\n', info)
+    start_time = time.time()
+    chunks = nlp_worker.extract_info_from_tree(tree)
+    end_time = time.time()
+    chunks_time = end_time - start_time
+    print(f"extract_info_from_tree took {chunks_time} seconds")
+    print('\n', chunks)
 
-# test()
+    
+test()
