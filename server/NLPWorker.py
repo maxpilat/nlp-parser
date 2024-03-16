@@ -89,13 +89,8 @@ class NlpWorker:
                 # Если узел является листом, добавляем информацию о слове и теге в список
                 word = subtree[0].lower()
                 tag = subtree[1]
-                
-                start_time = time.time()
                 lemma = NlpWorker.lemmatize(word, tag)
-                end_time = time.time()
-                lemma_time = end_time - start_time
-                print(f"lemmatize took {lemma_time} seconds")
-                
+               
                 return {'origin': word, 'tag': tag, 'lemma': lemma}
             
         data = [recursion(subtree) for subtree in tree]
@@ -115,6 +110,7 @@ def test():
     end_time = time.time()
     build_tree_time = end_time - start_time
     print(f"build_tree took {build_tree_time} seconds")
+    print(str(tree))
     tree.pretty_print()
 
     start_time = time.time()
@@ -123,6 +119,5 @@ def test():
     chunks_time = end_time - start_time
     print(f"extract_info_from_tree took {chunks_time} seconds")
     print('\n', chunks)
-
     
-test()
+# test()

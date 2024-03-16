@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IChunk } from '../models/chunk';
+import { Chunk } from '../models/chunk';
 
-export interface INlpResponse {
+export type NlpResponse = {
   sentence: string;
-  chunks: IChunk[];
-}
+  chunks: Chunk[];
+  tree: string;
+};
 
 @Injectable({
   providedIn: 'root',
@@ -20,6 +21,6 @@ export class NlpService {
     return this.http.post(
       'http://127.0.0.1:5000',
       formData
-    ) as Observable<INlpResponse>;
+    ) as Observable<NlpResponse>;
   }
 }

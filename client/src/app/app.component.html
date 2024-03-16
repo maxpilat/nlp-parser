@@ -34,70 +34,120 @@
         {{ data.sentence }}
       </div>
 
-      <div class="mt-4 flex gap-2">
-        <div
-          (click)="downloadFile()"
-          class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
-          title="download"
+      <div class="mb-4 mt-2 border-b border-gray-200 dark:border-gray-700">
+        <ul
+          class="flex flex-wrap -mb-px text-sm font-medium text-center"
+          id="default-tab"
+          data-tabs-toggle="#default-tab-content"
+          role="tablist"
         >
-          <img src="../assets/download.png" alt="download" class="w-5" />
-        </div>
-        <div
-          (click)="modalService.openModal('FilterChunksModal')"
-          class="relative border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
-          title="filter chunks"
-        >
-          <img src="../assets/filter.png" alt="filter" class="w-5" />
-          <div
-            *ngIf="chunkFilterService.isSelected()"
-            class="absolute w-3 h-3 rounded-lg bg-gray-500 -top-1 -right-1"
-          ></div>
-        </div>
-        <div
-          (click)="modalService.openModal('InfoModal')"
-          class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
-          title="info"
-        >
-          <img src="../assets/question.png" alt="info" class="w-5" />
-        </div>
+          <li class="me-2" role="presentation">
+            <button
+              class="inline-block p-4 border-b-2 rounded-t-lg text-gray-500 hover:border-gray-300 aria-selected:text-black aria-selected:border-black"
+              id="table-tab"
+              data-tabs-target="#table"
+              type="button"
+              role="tab"
+              aria-controls="table"
+              [ariaSelected]="
+                tabService.getCurrentTab() === tabService.tabs.Table
+              "
+              (click)="tabService.setTab(tabService.tabs.Table)"
+            >
+              Table
+            </button>
+          </li>
+          <li class="me-2" role="presentation">
+            <button
+              class="inline-block p-4 border-b-2 rounded-t-lg text-gray-500 hover:border-gray-300 aria-selected:text-black aria-selected:border-black"
+              id="tree-tab"
+              data-tabs-target="#tree"
+              type="button"
+              role="tab"
+              aria-controls="tree"
+              [ariaSelected]="
+                tabService.getCurrentTab() === tabService.tabs.Tree
+              "
+              (click)="tabService.setTab(tabService.tabs.Tree)"
+            >
+              Tree
+            </button>
+          </li>
+        </ul>
       </div>
 
-      <table class="table-auto border mt-4 w-full" style="border-radius: 80px">
-        <thead>
-          <tr>
-            <th class="px-4 py-2 border">Role</th>
-            <th class="px-4 py-2 border">Chunk</th>
-          </tr>
-        </thead>
-        <tr *ngFor="let chunk of filterChunks()">
-          <td class="px-4 py-2 border">{{ chunk.role }}</td>
-          <td class="px-4 py-2 border">
-            <span
-              class="cursor-pointer hover:bg-gray-200"
-              *ngFor="let word of chunk.words"
-              (mouseover)="toolbox = word"
-              (mouseout)="toolbox = null"
-            >
-              {{ word.origin }}
-            </span>
-          </td>
-        </tr>
-      </table>
-
-      <div class="mt-4 bg-white border p-2">
-        <ng-container *ngIf="toolbox; else noToolbox">
-          <p>
-            <span class="font-bold">Lemma: </span>
-            {{ toolbox.lemma }}
-          </p>
-          <p>
-            <span class="font-bold">Tag: </span>
-            {{ toolbox.tag }}
-          </p>
-        </ng-container>
-        <ng-template #noToolbox>
-          Point to a chunk from the table...
-        </ng-template>
+      <div
+        *ngIf="tabService.getCurrentTab() === tabService.tabs.Table"
+        class="flex gap-2"
+      >
+        <div class="flex flex-col gap-2">
+          <div
+            (click)="downloadFile()"
+            class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
+            title="download"
+          >
+            <img src="../assets/download.png" alt="download" class="w-5" />
+          </div>
+          <div
+            (click)="modalService.openModal('FilterChunksModal')"
+            class="relative border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
+            title="filter chunks"
+          >
+            <img src="../assets/filter.png" alt="filter" class="w-5" />
+            <div
+              *ngIf="chunkFilterService.isSelected()"
+              class="absolute w-3 h-3 rounded-lg bg-gray-500 -top-1 -right-1"
+            ></div>
+          </div>
+          <div
+            (click)="modalService.openModal('InfoModal')"
+            class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
+            title="info"
+          >
+            <img src="../assets/question.png" alt="info" class="w-5" />
+          </div>
+        </div>
+        <div class="w-full">
+          <table class="table-auto border w-full" style="border-radius: 80px">
+            <thead>
+              <tr>
+                <th class="px-4 py-2 border">Role</th>
+                <th class="px-4 py-2 border">Chunk</th>
+              </tr>
+            </thead>
+            <tr *ngFor="let chunk of filterChunks()">
+              <td class="px-4 py-2 border">{{ chunk.role }}</td>
+              <td class="px-4 py-2 border">
+                <span
+                  class="cursor-pointer hover:bg-gray-200"
+                  *ngFor="let word of chunk.words"
+                  (mouseover)="toolbox = word"
+                  (mouseout)="toolbox = null"
+                >
+                  {{ word.origin }}
+                </span>
+              </td>
+            </tr>
+          </table>
+          <div class="mt-4 bg-white border p-2">
+            <ng-container *ngIf="toolbox; else noToolbox">
+              <p>
+                <span class="font-bold">Lemma: </span>
+                {{ toolbox.lemma }}
+              </p>
+              <p>
+                <span class="font-bold">Tag: </span>
+                {{ toolbox.tag }}
+              </p>
+            </ng-container>
+            <ng-template #noToolbox>
+              Point to a chunk from the table...
+            </ng-template>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="tabService.getCurrentTab() === tabService.tabs.Tree">
+        <pre>{{ data.tree }}</pre>
       </div>
     </div>
 

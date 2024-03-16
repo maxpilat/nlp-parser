@@ -31,8 +31,8 @@ def parse_text():
         nlp_worker = NlpWorker(text)
         tree = nlp_worker.build_tree()
         chunks = nlp_worker.extract_info_from_tree(tree)
-        data = { 'sentence': nlp_worker.sentence, 'chunks': chunks }
-
+        data = { 'sentence': nlp_worker.sentence, 'chunks': chunks, 'tree': str(tree) }
+        
         return jsonify(data)
     except Exception as err:
         error_response = {"status": "error", "message": str(err)}

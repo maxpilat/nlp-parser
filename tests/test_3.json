@@ -61,5 +61,6 @@
       ]
     }
   ],
-  "sentence": "I have an interesting book on the shelf."
+  "sentence": "I have an interesting book on the shelf.",
+  "tree": "(S\n  (NP I/PRP)\n  (VP have/VBP)\n  an/DT\n  (ADJP interesting/JJ)\n  (NP book/NN)\n  (ADVP on/IN the/DT shelf/NN)\n  ./.)"
 }

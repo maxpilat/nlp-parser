@@ -1,14 +1,15 @@
 import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { NlpService, INlpResponse } from '../services/nlp.service';
+import { NlpService, NlpResponse } from '../services/nlp.service';
 import { ModalService } from '../services/modal.service';
-import { IWord } from '../models/chunk';
+import { Word } from '../models/chunk';
 import { ChunkFilterModal } from '../components/chunk-filter-modal/chunk-filter-modal.component';
 import { ChunkFilterService } from '../services/chunk-filter.service';
 import { InfoModal } from '../components/info-modal/info-modal.component';
 import { ErrorService } from '../services/error.service';
 import { finalize } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { TabService } from '../services/tab.service';
 
 @Component({
   selector: 'app-root',
@@ -18,15 +19,16 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class AppComponent {
   title = 'nlp parser';
-  data: INlpResponse = { sentence: '', chunks: [] };
+  data: NlpResponse = { sentence: '', chunks: [], tree: '' };
   isLoading = false;
-  toolbox: IWord | null = null;
+  toolbox: Word | null = null;
 
   constructor(
     private nlpService: NlpService,
     public modalService: ModalService,
     public chunkFilterService: ChunkFilterService,
-    public errorService: ErrorService
+    public errorService: ErrorService,
+    public tabService: TabService
   ) {}
 
   async onFileSelected(event: Event) {
@@ -45,7 +47,7 @@ export class AppComponent {
           })
         )
         .subscribe({
-          next: (value: INlpResponse) => {
+          next: (value: NlpResponse) => {
             this.data = value;
           },
           error: (err: HttpErrorResponse) => {
@@ -76,9 +78,5 @@ export class AppComponent {
         .getRoles()
         .find((role) => role.role === chunk.role && role.isSelected)
     );
-  }
-
-  onInfo() {
-    this.modalService.openModal('InfoModal');
   }
 }

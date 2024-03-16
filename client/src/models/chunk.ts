@@ -44,13 +44,13 @@ export enum ChunkRoles {
   VP = 'Verb Phrase', // Сказуемое
 }
 
-export interface IWord {
+export type Word = {
   lemma: string;
   origin: string;
   tag: PosTags;
-}
+};
 
-export interface IChunk {
+export type Chunk = {
   role: ChunkRoles;
-  words: IWord[];
-}
+  words: Word[];
+};
