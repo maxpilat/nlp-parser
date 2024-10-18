@@ -5,3 +5,4 @@ aspose-words>=24.1.0
 striprtf
 inflect
 flask_cors
+nltk

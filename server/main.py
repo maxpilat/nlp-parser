@@ -29,6 +29,7 @@ def parse_text():
                 return jsonify({"status": "error", "message": "Unsupported content type"}), 400
         
         nlp_worker = NlpWorker(text)
+        print(nlp_worker)
         tree = nlp_worker.build_tree()
         chunks = nlp_worker.extract_info_from_tree(tree)
         data = { 'sentence': nlp_worker.sentence, 'chunks': chunks, 'tree': str(tree) }
