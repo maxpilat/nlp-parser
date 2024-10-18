@@ -27,12 +27,9 @@
       </label>
     </div>
 
-    <div
-      *ngIf="!isLoading && data[curSentenceIndex] && !errorService.getState()"
-      class="mt-4"
-    >
+    <div *ngIf="!isLoading && data?.sentences" class="mt-4">
       <div
-        *ngFor="let item of data; let i = index"
+        *ngFor="let item of data?.sentences; let i = index"
         class="mt-1 border p-2 cursor-pointer hover:bg-gray-100"
         [ngClass]="{
           'bg-gray-100': i === curSentenceIndex
@@ -157,7 +154,11 @@
         </div>
       </div>
       <div *ngIf="tabService.getCurrentTab() === tabService.tabs.Tree">
-        <pre>{{ data[curSentenceIndex].tree }}</pre>
+        <pre>{{
+          data && data.sentences[curSentenceIndex]
+            ? data.sentences[curSentenceIndex].tree
+            : null
+        }}</pre>
       </div>
     </div>
 

@@ -1,4 +1,7 @@
+from collections import Counter
+import re
 import time
+from googletrans import Translator
 import nltk
 import inflect
 
@@ -36,7 +39,7 @@ class NlpWorker:
     
     # Построение синтаксического дерева
     @staticmethod
-    def build_tree(sentence):
+    def build_tree(sentence: str):
         # Разбиение предложения на слова
         words = nltk.word_tokenize(sentence)
         
@@ -83,15 +86,36 @@ class NlpWorker:
         sorted_chunks = sorted(chunks, key=lambda x: x['words'][0]['origin'] if 'words' in x else x.get('origin', ''))
         
         return sorted_chunks
+    
+    @staticmethod
+    def translate(text: str):
+        # Удаляем пунктуацию и символы, оставляем только слова
+        words = re.findall(r'\b\w+\b', text.lower())
+        word_count = Counter(words)
+
+        translator = Translator()
+
+        # Генерируем результаты с переводом
+        result = [
+            {
+                'word': word,
+                'count': count,
+                'translation': translator.translate(word, src='en', dest='ru').text
+            }
+            for word, count in word_count.items()
+        ]
+
+        # Сортируем по частоте
+        return sorted(result, key=lambda x: x['count'], reverse=True)
+
 
 def test():
     # sentence = "The cat in the hat is sleeping."
     sentence = "I have an interesting book on the shelf."
 
-    nlp_worker = NlpWorker(sentence)
     
     start_time = time.time()
-    tree = nlp_worker.build_tree()
+    tree = NlpWorker.build_tree(sentence)
     end_time = time.time()
     build_tree_time = end_time - start_time
     print(f"build_tree took {build_tree_time} seconds")
@@ -99,10 +123,14 @@ def test():
     tree.pretty_print()
 
     start_time = time.time()
-    chunks = nlp_worker.extract_info_from_tree(tree)
+    chunks = NlpWorker.extract_info_from_tree(tree)
     end_time = time.time()
     chunks_time = end_time - start_time
     print(f"extract_info_from_tree took {chunks_time} seconds")
     print('\n', chunks)
+
+    t = NlpWorker.translate(sentence)
+    print(t)
+
     
 # test()

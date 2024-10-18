@@ -2,15 +2,15 @@ from striprtf.striprtf import rtf_to_text
 
 class FileParser:
     @staticmethod
-    def txt_to_str(file):
+    def txt_to_str(file) -> str:
         text = file.read().decode('utf-8')
-        return FileParser.split_into_sentences(text)
+        return text
     
     @staticmethod
-    def rtf_to_str(file):
+    def rtf_to_str(file) -> str:
         file_content = file.read().decode('utf-8')
         text = rtf_to_text(file_content)
-        return FileParser.split_into_sentences(text)
+        return text
     
     @staticmethod
     def split_into_sentences(text: str):

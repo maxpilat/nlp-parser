@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
 export enum TabList {
-  Tree,
   Table,
+  Tree,
 }
 
 @Injectable({

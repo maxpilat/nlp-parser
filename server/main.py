@@ -17,40 +17,37 @@ def parse_text():
         # Определение текста в зависимости от типа файла
         match file_extension:
             case '.txt':
-                sentences = FileParser.txt_to_str(file)
+                text = FileParser.txt_to_str(file)
             case '.rtf':
-                sentences = FileParser.rtf_to_str(file)
+                text = FileParser.rtf_to_str(file)
             case '.json':
                 text = file.read()
                 data = json.loads(text)
 
-                print(data)
-                
-                if isinstance(data, list) and len(data) > 0 and all(
-                    'sentence' in item and isinstance(item['sentence'], str) and
-                    'chunks' in item and isinstance(item['chunks'], list) and
-                    'tree' in item and isinstance(item['tree'], str)
-                    for item in data
-                ): return jsonify(data)
+                if isinstance(data, dict) and 'words' in data and 'sentences' in data:
+                    return jsonify(data)
                 return jsonify({"status": "error", "message": "Unsupported content type"}), 400
             case _:
                 return jsonify({"status": "error", "message": "Unsupported content type"}), 400
-        
-        # Обработка каждого предложения с помощью NlpWorker
-        nlp_worker = NlpWorker()
+
+        sentences = FileParser.split_into_sentences(text)
         result = []
 
         for sentence in sentences:
-            tree = nlp_worker.build_tree(sentence)
-            chunks = nlp_worker.extract_info_from_tree(tree)
+            tree = NlpWorker.build_tree(sentence)
+            chunks = NlpWorker.extract_info_from_tree(tree)
             result.append({
                 'sentence': sentence,
                 'chunks': chunks,
                 'tree': str(tree)
             })
 
-        # Возвращаем список объектов
-        return jsonify(result)
+        translations = NlpWorker.translate(text)
+
+        return jsonify({
+            'sentences': result,
+            'words': translations
+        })
     except Exception as err:
         error_response = {"status": "error", "message": str(err)}
         return jsonify(error_response), 500

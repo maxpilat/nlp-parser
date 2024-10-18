@@ -3,6 +3,12 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Chunk } from '../models/chunk';
 
+export type NlpWord = {
+  word: string;
+  count: number;
+  translation: string;
+};
+
 export type NlpSentence = {
   sentence: string;
   chunks: Chunk[];
@@ -18,8 +24,9 @@ export class NlpService {
   parseFile(file: File) {
     const formData = new FormData();
     formData.append('file', file);
-    return this.http.post('http://127.0.0.1:5000', formData) as Observable<
-      NlpSentence[]
-    >;
+    return this.http.post('http://127.0.0.1:5000', formData) as Observable<{
+      words: NlpWord[];
+      sentences: NlpSentence[];
+    }>;
   }
 }
