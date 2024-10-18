@@ -1,66 +1,772 @@
-{
-  "chunks": [
-    {
-      "role": "NP",
-      "words": [
-        {
-          "lemma": "book",
-          "origin": "book",
-          "tag": "NN"
-        }
-      ]
-    },
-    {
-      "role": "VP",
-      "words": [
-        {
-          "lemma": "have",
-          "origin": "have",
-          "tag": "VBP"
-        }
-      ]
-    },
-    {
-      "role": "NP",
-      "words": [
-        {
-          "lemma": "i",
-          "origin": "i",
-          "tag": "PRP"
-        }
-      ]
-    },
-    {
-      "role": "ADJP",
-      "words": [
-        {
-          "lemma": "interesting",
-          "origin": "interesting",
-          "tag": "JJ"
-        }
-      ]
-    },
-    {
-      "role": "ADVP",
-      "words": [
-        {
-          "lemma": "on",
-          "origin": "on",
-          "tag": "IN"
-        },
-        {
-          "lemma": "the",
-          "origin": "the",
-          "tag": "DT"
-        },
-        {
-          "lemma": "shelf",
-          "origin": "shelf",
-          "tag": "NN"
-        }
-      ]
-    }
-  ],
-  "sentence": "I have an interesting book on the shelf.",
-  "tree": "(S\n  (NP I/PRP)\n  (VP have/VBP)\n  an/DT\n  (ADJP interesting/JJ)\n  (NP book/NN)\n  (ADVP on/IN the/DT shelf/NN)\n  ./.)"
-}
+[
+  {
+    "chunks": [
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "book",
+            "origin": "book",
+            "tag": "NN"
+          }
+        ]
+      },
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "have",
+            "origin": "have",
+            "tag": "VBP"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "i",
+            "origin": "i",
+            "tag": "PRP"
+          }
+        ]
+      },
+      {
+        "role": "ADJP",
+        "words": [
+          {
+            "lemma": "interesting",
+            "origin": "interesting",
+            "tag": "JJ"
+          }
+        ]
+      },
+      {
+        "role": "ADVP",
+        "words": [
+          {
+            "lemma": "on",
+            "origin": "on",
+            "tag": "IN"
+          },
+          {
+            "lemma": "the",
+            "origin": "the",
+            "tag": "DT"
+          },
+          {
+            "lemma": "shelf",
+            "origin": "shelf",
+            "tag": "NN"
+          }
+        ]
+      }
+    ],
+    "sentence": "I have an interesting book on the shelf",
+    "tree": "(S\n  (NP I/PRP)\n  (VP have/VBP)\n  an/DT\n  (ADJP interesting/JJ)\n  (NP book/NN)\n  (ADVP on/IN the/DT shelf/NN))"
+  },
+  {
+    "chunks": [
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "'s",
+            "origin": "'s",
+            "tag": "VBZ"
+          }
+        ]
+      },
+      {
+        "role": "ADJP",
+        "words": [
+          {
+            "lemma": "ancient",
+            "origin": "ancient",
+            "tag": "JJ"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "civilization",
+            "origin": "civilizations",
+            "tag": "NNS"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "culture",
+            "origin": "cultures",
+            "tag": "NNS"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "it",
+            "origin": "it",
+            "tag": "PRP"
+          }
+        ]
+      },
+      {
+        "role": "ADJP",
+        "words": [
+          {
+            "lemma": "mysterious",
+            "origin": "mysterious",
+            "tag": "JJ"
+          }
+        ]
+      }
+    ],
+    "sentence": "It's about ancient civilizations and their mysterious cultures",
+    "tree": "(S\n  (NP It/PRP)\n  (VP 's/VBZ)\n  about/IN\n  (ADJP ancient/JJ)\n  (NP civilizations/NNS)\n  and/CC\n  their/PRP$\n  (ADJP mysterious/JJ)\n  (NP cultures/NNS))"
+  },
+  {
+    "chunks": [
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "i",
+            "origin": "i",
+            "tag": "PRP"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "it",
+            "origin": "it",
+            "tag": "PRP"
+          }
+        ]
+      },
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "plan",
+            "origin": "plan",
+            "tag": "VBP"
+          }
+        ]
+      },
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "start",
+            "origin": "start",
+            "tag": "VB"
+          },
+          {
+            "lemma": "read",
+            "origin": "reading",
+            "tag": "VBG"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "this",
+            "origin": "this",
+            "tag": "DT"
+          },
+          {
+            "lemma": "weekend",
+            "origin": "weekend",
+            "tag": "NN"
+          }
+        ]
+      }
+    ],
+    "sentence": "I plan to start reading it this weekend",
+    "tree": "(S\n  (NP I/PRP)\n  (VP plan/VBP)\n  to/TO\n  (VP start/VB reading/VBG)\n  (NP it/PRP)\n  (NP this/DT weekend/NN))"
+  },
+  {
+    "chunks": [
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "event",
+            "origin": "events",
+            "tag": "NNS"
+          }
+        ]
+      },
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "explore",
+            "origin": "explores",
+            "tag": "VBZ"
+          }
+        ]
+      },
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "shape",
+            "origin": "shaped",
+            "tag": "VBD"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "the",
+            "origin": "the",
+            "tag": "DT"
+          },
+          {
+            "lemma": "author",
+            "origin": "author",
+            "tag": "NN"
+          }
+        ]
+      },
+      {
+        "role": "ADJP",
+        "words": [
+          {
+            "lemma": "various",
+            "origin": "various",
+            "tag": "JJ"
+          },
+          {
+            "lemma": "historical",
+            "origin": "historical",
+            "tag": "JJ"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "world",
+            "origin": "world",
+            "tag": "NN"
+          }
+        ]
+      }
+    ],
+    "sentence": "The author explores various historical events that shaped our world",
+    "tree": "(S\n  (NP The/DT author/NN)\n  (VP explores/VBZ)\n  (ADJP various/JJ historical/JJ)\n  (NP events/NNS)\n  that/WDT\n  (VP shaped/VBD)\n  our/PRP$\n  (NP world/NN))"
+  },
+  {
+    "chunks": [
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "captivate",
+            "origin": "captivating",
+            "tag": "VBG"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "each",
+            "origin": "each",
+            "tag": "DT"
+          },
+          {
+            "lemma": "chapter",
+            "origin": "chapter",
+            "tag": "NN"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "fact",
+            "origin": "facts",
+            "tag": "NNS"
+          }
+        ]
+      },
+      {
+        "role": "ADJP",
+        "words": [
+          {
+            "lemma": "intriguing",
+            "origin": "intriguing",
+            "tag": "JJ"
+          }
+        ]
+      },
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "be",
+            "origin": "is",
+            "tag": "VBZ"
+          },
+          {
+            "lemma": "fill",
+            "origin": "filled",
+            "tag": "VBN"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "story",
+            "origin": "stories",
+            "tag": "NNS"
+          }
+        ]
+      }
+    ],
+    "sentence": "Each chapter is filled with intriguing facts and captivating stories",
+    "tree": "(S\n  (NP Each/DT chapter/NN)\n  (VP is/VBZ filled/VBN)\n  with/IN\n  (ADJP intriguing/JJ)\n  (NP facts/NNS)\n  and/CC\n  (VP captivating/VBG)\n  (NP stories/NNS))"
+  },
+  {
+    "chunks": [
+      {
+        "role": "ADJP",
+        "words": [
+          {
+            "lemma": "engaging",
+            "origin": "engaging",
+            "tag": "JJ"
+          }
+        ]
+      },
+      {
+        "role": "ADVP",
+        "words": [
+          {
+            "lemma": "even",
+            "origin": "even",
+            "tag": "RB"
+          },
+          {
+            "lemma": "more",
+            "origin": "more",
+            "tag": "RBR"
+          }
+        ]
+      },
+      {
+        "role": "ADVP",
+        "words": [
+          {
+            "lemma": "in",
+            "origin": "in",
+            "tag": "IN"
+          },
+          {
+            "lemma": "the",
+            "origin": "the",
+            "tag": "DT"
+          },
+          {
+            "lemma": "book",
+            "origin": "book",
+            "tag": "NN"
+          }
+        ]
+      },
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "make",
+            "origin": "make",
+            "tag": "VBP"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "the",
+            "origin": "the",
+            "tag": "DT"
+          },
+          {
+            "lemma": "illustration",
+            "origin": "illustrations",
+            "tag": "NNS"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "the",
+            "origin": "the",
+            "tag": "DT"
+          },
+          {
+            "lemma": "content",
+            "origin": "content",
+            "tag": "NN"
+          }
+        ]
+      }
+    ],
+    "sentence": "The illustrations in the book make the content even more engaging",
+    "tree": "(S\n  (NP The/DT illustrations/NNS)\n  (ADVP in/IN the/DT book/NN)\n  (VP make/VBP)\n  (NP the/DT content/NN)\n  (ADVP even/RB more/RBR)\n  (ADJP engaging/JJ))"
+  },
+  {
+    "chunks": [
+      {
+        "role": "ADVP",
+        "words": [
+          {
+            "lemma": "about",
+            "origin": "about",
+            "tag": "IN"
+          },
+          {
+            "lemma": "the",
+            "origin": "the",
+            "tag": "DT"
+          },
+          {
+            "lemma": "past",
+            "origin": "past",
+            "tag": "NN"
+          }
+        ]
+      },
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "dive",
+            "origin": "dive",
+            "tag": "VB"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "i",
+            "origin": "i",
+            "tag": "PRP"
+          }
+        ]
+      },
+      {
+        "role": "ADVP",
+        "words": [
+          {
+            "lemma": "into",
+            "origin": "into",
+            "tag": "IN"
+          },
+          {
+            "lemma": "the",
+            "origin": "the",
+            "tag": "DT"
+          },
+          {
+            "lemma": "page",
+            "origin": "pages",
+            "tag": "NNS"
+          }
+        ]
+      },
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "learn",
+            "origin": "learn",
+            "tag": "VB"
+          }
+        ]
+      },
+      {
+        "role": "ADJP",
+        "words": [
+          {
+            "lemma": "more",
+            "origin": "more",
+            "tag": "JJR"
+          }
+        ]
+      },
+      {
+        "role": "ADVP",
+        "words": [
+          {
+            "lemma": "n't",
+            "origin": "n't",
+            "tag": "RB"
+          }
+        ]
+      },
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "wait",
+            "origin": "wait",
+            "tag": "VB"
+          }
+        ]
+      }
+    ],
+    "sentence": "I can't wait to dive into the pages and learn more about the past",
+    "tree": "(S\n  (NP I/PRP)\n  ca/MD\n  (ADVP n't/RB)\n  (VP wait/VB)\n  to/TO\n  (VP dive/VB)\n  (ADVP into/IN the/DT pages/NNS)\n  and/CC\n  (VP learn/VB)\n  (ADJP more/JJR)\n  (ADVP about/IN the/DT past/NN))"
+  },
+  {
+    "chunks": [
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "'ll",
+            "origin": "'ll",
+            "tag": "MD"
+          },
+          {
+            "lemma": "find",
+            "origin": "find",
+            "tag": "VB"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "i",
+            "origin": "i",
+            "tag": "PRP"
+          }
+        ]
+      },
+      {
+        "role": "ADJP",
+        "words": [
+          {
+            "lemma": "own",
+            "origin": "own",
+            "tag": "JJ"
+          }
+        ]
+      },
+      {
+        "role": "ADVP",
+        "words": [
+          {
+            "lemma": "perhaps",
+            "origin": "perhaps",
+            "tag": "RB"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "some",
+            "origin": "some",
+            "tag": "DT"
+          },
+          {
+            "lemma": "inspiration",
+            "origin": "inspiration",
+            "tag": "NN"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "writing",
+            "origin": "writing",
+            "tag": "NN"
+          }
+        ]
+      }
+    ],
+    "sentence": "Perhaps I'll find some inspiration for my own writing",
+    "tree": "(S\n  (ADVP Perhaps/RB)\n  (NP I/PRP)\n  (VP 'll/MD find/VB)\n  (NP some/DT inspiration/NN)\n  for/IN\n  my/PRP$\n  (ADJP own/JJ)\n  (NP writing/NN))"
+  },
+  {
+    "chunks": [
+      {
+        "role": "ADVP",
+        "words": [
+          {
+            "lemma": "always",
+            "origin": "always",
+            "tag": "RB"
+          }
+        ]
+      },
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "be",
+            "origin": "been",
+            "tag": "VBN"
+          }
+        ]
+      },
+      {
+        "role": "ADJP",
+        "words": [
+          {
+            "lemma": "different",
+            "origin": "different",
+            "tag": "JJ"
+          }
+        ]
+      },
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "escape",
+            "origin": "escape",
+            "tag": "VB"
+          }
+        ]
+      },
+      {
+        "role": "ADJP",
+        "words": [
+          {
+            "lemma": "great",
+            "origin": "great",
+            "tag": "JJ"
+          }
+        ]
+      },
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "have",
+            "origin": "has",
+            "tag": "VBZ"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "reading",
+            "origin": "reading",
+            "tag": "NN"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "way",
+            "origin": "way",
+            "tag": "NN"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "world",
+            "origin": "worlds",
+            "tag": "NNS"
+          }
+        ]
+      }
+    ],
+    "sentence": "Reading has always been a great way to escape into different worlds",
+    "tree": "(S\n  (NP Reading/NN)\n  (VP has/VBZ)\n  (ADVP always/RB)\n  (VP been/VBN)\n  a/DT\n  (ADJP great/JJ)\n  (NP way/NN)\n  to/TO\n  (VP escape/VB)\n  into/IN\n  (ADJP different/JJ)\n  (NP worlds/NNS))"
+  },
+  {
+    "chunks": [
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "adventure",
+            "origin": "adventure",
+            "tag": "NN"
+          }
+        ]
+      },
+      {
+        "role": "ADJP",
+        "words": [
+          {
+            "lemma": "perfect",
+            "origin": "perfect",
+            "tag": "JJ"
+          }
+        ]
+      },
+      {
+        "role": "VP",
+        "words": [
+          {
+            "lemma": "seem",
+            "origin": "seems",
+            "tag": "VBZ"
+          }
+        ]
+      },
+      {
+        "role": "NP",
+        "words": [
+          {
+            "lemma": "this",
+            "origin": "this",
+            "tag": "DT"
+          },
+          {
+            "lemma": "book",
+            "origin": "book",
+            "tag": "NN"
+          }
+        ]
+      }
+    ],
+    "sentence": "This book seems like the perfect adventure",
+    "tree": "(S\n  (NP This/DT book/NN)\n  (VP seems/VBZ)\n  like/IN\n  the/DT\n  (ADJP perfect/JJ)\n  (NP adventure/NN))"
+  }
+]

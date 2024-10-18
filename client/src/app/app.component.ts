@@ -1,6 +1,6 @@
-import { NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import { CommonModule, NgFor, NgIf, TitleCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { NlpService, NlpResponse } from '../services/nlp.service';
+import { NlpService, NlpSentence } from '../services/nlp.service';
 import { ModalService } from '../services/modal.service';
 import { Word } from '../models/chunk';
 import { ChunkFilterModal } from '../components/chunk-filter-modal/chunk-filter-modal.component';
@@ -14,14 +14,22 @@ import { TabService } from '../services/tab.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [TitleCasePipe, NgFor, NgIf, ChunkFilterModal, InfoModal],
+  imports: [
+    CommonModule,
+    TitleCasePipe,
+    NgFor,
+    NgIf,
+    ChunkFilterModal,
+    InfoModal,
+  ],
   templateUrl: './app.component.html',
 })
 export class AppComponent {
   title = 'nlp parser';
-  data: NlpResponse = { sentence: '', chunks: [], tree: '' };
+  data: NlpSentence[] = [];
   isLoading = false;
   toolbox: Word | null = null;
+  curSentenceIndex: number = 0;
 
   constructor(
     private nlpService: NlpService,
@@ -47,11 +55,11 @@ export class AppComponent {
           })
         )
         .subscribe({
-          next: (value: NlpResponse) => {
+          next: (value) => {
             this.data = value;
           },
           error: (err: HttpErrorResponse) => {
-            this.data.chunks = [];
+            this.data = [];
             this.errorService.setTempState({
               status: err.status,
               message: err.error.message,
@@ -73,7 +81,7 @@ export class AppComponent {
   }
 
   filterChunks() {
-    return this.data.chunks.filter((chunk) =>
+    return this.data[this.curSentenceIndex].chunks.filter((chunk) =>
       this.chunkFilterService
         .getRoles()
         .find((role) => role.role === chunk.role && role.isSelected)

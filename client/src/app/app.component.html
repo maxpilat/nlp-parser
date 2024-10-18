@@ -1,4 +1,4 @@
-<div class="max-w-3xl mx-auto my-6 px-4">
+<div class="max-w-3xl mx-auto mt-6 mb-20 px-4">
   <div
     class="bg-white bg-opacity-70 backdrop-blur-sm py-4 px-8 border rounded-full shadow-sm sticky top-6 z-10"
   >
@@ -28,10 +28,18 @@
     </div>
 
     <div
-      *ngIf="!isLoading && data.chunks.length > 0 && !errorService.getState()"
+      *ngIf="!isLoading && data[curSentenceIndex] && !errorService.getState()"
+      class="mt-4"
     >
-      <div class="mt-4 border p-2">
-        {{ data.sentence }}
+      <div
+        *ngFor="let item of data; let i = index"
+        class="mt-1 border p-2 cursor-pointer hover:bg-gray-100"
+        [ngClass]="{
+          'bg-gray-100': i === curSentenceIndex
+        }"
+        (click)="curSentenceIndex = i"
+      >
+        {{ item.sentence }}
       </div>
 
       <div class="mb-4 mt-2 border-b border-gray-200 dark:border-gray-700">
@@ -129,25 +137,27 @@
               </td>
             </tr>
           </table>
-          <div class="mt-4 bg-white border p-2">
-            <ng-container *ngIf="toolbox; else noToolbox">
-              <p>
-                <span class="font-bold">Lemma: </span>
-                {{ toolbox.lemma }}
-              </p>
-              <p>
-                <span class="font-bold">Tag: </span>
-                {{ toolbox.tag }}
-              </p>
-            </ng-container>
-            <ng-template #noToolbox>
-              Point to a chunk from the table...
-            </ng-template>
+          <div class="min-h-20">
+            <div class="mt-4 bg-white border p-2">
+              <ng-container *ngIf="toolbox; else noToolbox">
+                <p>
+                  <span class="font-bold">Lemma: </span>
+                  {{ toolbox.lemma }}
+                </p>
+                <p>
+                  <span class="font-bold">Tag: </span>
+                  {{ toolbox.tag }}
+                </p>
+              </ng-container>
+              <ng-template #noToolbox>
+                Point to a chunk from the table...
+              </ng-template>
+            </div>
           </div>
         </div>
       </div>
       <div *ngIf="tabService.getCurrentTab() === tabService.tabs.Tree">
-        <pre>{{ data.tree }}</pre>
+        <pre>{{ data[curSentenceIndex].tree }}</pre>
       </div>
     </div>
 

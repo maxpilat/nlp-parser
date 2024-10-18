@@ -7,9 +7,6 @@ nltk.download('punkt_tab')
 nltk.download('averaged_perceptron_tagger_eng')
 
 class NlpWorker:
-    def __init__(self, sentence):
-        self.sentence = sentence
-        self._tree = None
 
     # Определение части речи по тегу
     @staticmethod
@@ -38,9 +35,10 @@ class NlpWorker:
         return lemma
     
     # Построение синтаксического дерева
-    def build_tree(self):
+    @staticmethod
+    def build_tree(sentence):
         # Разбиение предложения на слова
-        words = nltk.word_tokenize(self.sentence)
+        words = nltk.word_tokenize(sentence)
         
         # Определение частей речи для каждого слова
         start_time = time.time()
