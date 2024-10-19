@@ -8,12 +8,13 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
+
 @app.route('/', methods=['POST'])
 def parse_text():
     try:
         file = request.files['file']
         _, file_extension = splitext(file.filename.lower())
-        
+
         # Определение текста в зависимости от типа файла
         match file_extension:
             case '.txt':
@@ -51,6 +52,7 @@ def parse_text():
     except Exception as err:
         error_response = {"status": "error", "message": str(err)}
         return jsonify(error_response), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

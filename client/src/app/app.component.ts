@@ -1,4 +1,4 @@
-import { CommonModule, NgFor, NgIf, TitleCasePipe } from '@angular/common';
+import { CommonModule, TitleCasePipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { NlpService, NlpSentence, NlpWord } from '../services/nlp.service';
 import { ModalService } from '../services/modal.service';
@@ -14,14 +14,7 @@ import { TabService } from '../services/tab.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [
-    CommonModule,
-    TitleCasePipe,
-    NgFor,
-    NgIf,
-    ChunkFilterModal,
-    InfoModal,
-  ],
+  imports: [CommonModule, TitleCasePipe, ChunkFilterModal, InfoModal],
   templateUrl: './app.component.html',
 })
 export class AppComponent {

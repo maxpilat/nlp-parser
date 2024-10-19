@@ -1,13 +1,14 @@
 from collections import Counter
 import re
 import time
-from googletrans import Translator
+from deep_translator import GoogleTranslator
 import nltk
 import inflect
 
 nltk.download('wordnet')
 nltk.download('punkt_tab')
 nltk.download('averaged_perceptron_tagger_eng')
+
 
 class NlpWorker:
 
@@ -21,13 +22,14 @@ class NlpWorker:
         elif tag.startswith('J'):
             return nltk.corpus.wordnet.ADJ
         return nltk.corpus.wordnet.NOUN
-    
+
     # Лемматизация слова
     @staticmethod
     def lemmatize(word, tag):
         lemmatizer = nltk.WordNetLemmatizer()
-        lemma = lemmatizer.lemmatize(word, NlpWorker.define_part_of_speech(tag))
-        
+        lemma = lemmatizer.lemmatize(
+            word, NlpWorker.define_part_of_speech(tag))
+
         # Приводим к единственному числу существительные
         if tag == 'NNS' or tag == 'NNPS':
             inflect_engine = inflect.engine()
@@ -36,19 +38,15 @@ class NlpWorker:
                 lemma = singular_form
 
         return lemma
-    
+
     # Построение синтаксического дерева
     @staticmethod
     def build_tree(sentence: str):
         # Разбиение предложения на слова
         words = nltk.word_tokenize(sentence)
-        
+
         # Определение частей речи для каждого слова
-        start_time = time.time()
         pos_tags = nltk.pos_tag(words)
-        end_time = time.time()
-        pos_tags_time = end_time - start_time
-        print(f"pos_tag took {pos_tags_time} seconds")
 
         # Определение синтаксических правил для синтаксического анализа
         grammar = r"""
@@ -63,7 +61,7 @@ class NlpWorker:
         # Применение синтаксического анализатора к частям речи
         tree = chunk_parser.parse(pos_tags)
         return tree
-    
+
     # Конвертация дерева в список объектов
     @staticmethod
     def extract_info_from_tree(tree):
@@ -78,32 +76,39 @@ class NlpWorker:
                 word = subtree[0].lower()
                 tag = subtree[1]
                 lemma = NlpWorker.lemmatize(word, tag)
-               
+
                 return {'origin': word, 'tag': tag, 'lemma': lemma}
-            
+
         data = [recursion(subtree) for subtree in tree]
         chunks = [item for item in data if 'role' in item]
-        sorted_chunks = sorted(chunks, key=lambda x: x['words'][0]['origin'] if 'words' in x else x.get('origin', ''))
-        
+        sorted_chunks = sorted(
+            chunks, key=lambda x: x['words'][0]['origin'] if 'words' in x else x.get('origin', ''))
+
         return sorted_chunks
-    
+
     @staticmethod
     def translate(text: str):
         # Удаляем пунктуацию и символы, оставляем только слова
         words = re.findall(r'\b\w+\b', text.lower())
+
         word_count = Counter(words)
+        translator = GoogleTranslator(source='en', target='ru')
 
-        translator = Translator()
+        result = []
+        for word, count in word_count.items():
+            try:
+                # Выполняем перевод
+                translation = translator.translate(word)
+            except Exception as e:
+                print(f"Ошибка при переводе слова '{word}': {e}")
+                translation = "не удалось перевести"
 
-        # Генерируем результаты с переводом
-        result = [
-            {
+            # Добавляем результат в список
+            result.append({
                 'word': word,
                 'count': count,
-                'translation': translator.translate(word, src='en', dest='ru').text
-            }
-            for word, count in word_count.items()
-        ]
+                'translation': translation
+            })
 
         # Сортируем по частоте
         return sorted(result, key=lambda x: x['count'], reverse=True)
@@ -113,7 +118,6 @@ def test():
     # sentence = "The cat in the hat is sleeping."
     sentence = "I have an interesting book on the shelf."
 
-    
     start_time = time.time()
     tree = NlpWorker.build_tree(sentence)
     end_time = time.time()
@@ -132,5 +136,5 @@ def test():
     t = NlpWorker.translate(sentence)
     print(t)
 
-    
+
 # test()

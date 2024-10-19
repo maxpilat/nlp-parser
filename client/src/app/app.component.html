@@ -1,10 +1,10 @@
-<div class="max-w-3xl mx-auto mt-6 mb-20 px-4">
-  <div
-    class="bg-white bg-opacity-70 backdrop-blur-sm py-4 px-8 border rounded-full shadow-sm sticky top-6 z-10"
-  >
-    <h1 class="text-xl font-mono">{{ title | titlecase }}</h1>
-  </div>
+<div
+  class="bg-white bg-opacity-70 backdrop-blur-sm py-2 px-8 border-b sticky top-0 z-10"
+>
+  <h1 class="text-base font-mono">{{ title | titlecase }}</h1>
+</div>
 
+<div class="max-w-3xl mx-auto mt-2 mb-20 px-4">
   <div class="max-w-2xl mx-auto mt-6">
     <div title="upload" class="flex items-center justify-center w-full">
       <label
@@ -134,22 +134,16 @@
               </td>
             </tr>
           </table>
-          <div class="min-h-20">
-            <div class="mt-4 bg-white border p-2">
-              <ng-container *ngIf="toolbox; else noToolbox">
-                <p>
-                  <span class="font-bold">Lemma: </span>
-                  {{ toolbox.lemma }}
-                </p>
-                <p>
-                  <span class="font-bold">Tag: </span>
-                  {{ toolbox.tag }}
-                </p>
-              </ng-container>
-              <ng-template #noToolbox>
-                Point to a chunk from the table...
-              </ng-template>
-            </div>
+          <div class="mt-4 bg-white border py-2 px-3">
+            <ng-container *ngIf="toolbox; else noToolbox">
+              <span class="font-bold">Lemma: </span>
+              {{ toolbox.lemma }}
+              <span class="font-bold ml-1">Tag: </span>
+              {{ toolbox.tag }}
+            </ng-container>
+            <ng-template #noToolbox>
+              Point to a chunk from the table...
+            </ng-template>
           </div>
         </div>
       </div>
@@ -160,6 +154,20 @@
             : null
         }}</pre>
       </div>
+      <table class="table-auto border w-full mt-8" style="border-radius: 80px">
+        <thead>
+          <tr>
+            <th class="px-4 py-2 border">Word</th>
+            <th class="px-4 py-2 border">Count</th>
+            <th class="px-4 py-2 border">Translation</th>
+          </tr>
+        </thead>
+        <tr *ngFor="let word of data?.words">
+          <td class="px-4 py-2 border">{{ word.word }}</td>
+          <td class="px-4 py-2 border">{{ word.count }}</td>
+          <td class="px-4 py-2 border">{{ word.translation }}</td>
+        </tr>
+      </table>
     </div>
 
     <div *ngIf="isLoading" class="loader mt-6 mx-auto"></div>
