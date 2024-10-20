@@ -1,184 +1,204 @@
+<!-- Header -->
 <div
   class="bg-white bg-opacity-70 backdrop-blur-sm py-2 px-10 border-b sticky top-0 z-10"
 >
   <h1 class="text-base font-mono">{{ title | titlecase }}</h1>
 </div>
 
-<div class="max-w-3xl mx-auto mt-2 mb-20 px-4">
-  <div class="max-w-2xl mx-auto mt-6">
-    <div title="upload" class="flex items-center justify-center w-full">
-      <label
-        for="dropzone-file"
-        class="flex flex-col items-center justify-center w-full h-36 border border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-100"
-      >
-        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-          <img src="../assets/upload.png" alt="upload" class="w-8" />
-          <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-            <span class="font-semibold">Click to upload</span> or drag and drop
-          </p>
-          <p class="text-xs text-gray-500 dark:text-gray-400">TXT, RTF, JSON</p>
-        </div>
-        <input
-          id="dropzone-file"
-          type="file"
-          class="hidden"
-          (change)="onFileSelected($event)"
-        />
-      </label>
-    </div>
+<!-- Main Container -->
+<div class="max-w-3xl mx-auto mt-6 mb-10 px-4">
+  <!-- File Upload Section -->
+  <div title="upload" class="flex items-center justify-center w-full">
+    <label
+      for="dropzone-file"
+      tabindex="0"
+      #dropzone
+      (keydown)="onDropzoneKeyPress($event)"
+      class="flex flex-col items-center justify-center w-full h-36 border border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+    >
+      <div class="flex flex-col items-center justify-center pt-5 pb-6">
+        <img src="../assets/upload.png" alt="upload" class="w-8" />
+        <p class="mt-2 text-sm text-gray-500">
+          <span class="font-semibold">Click to upload</span> or drag and drop
+        </p>
+        <p class="text-xs text-gray-500">TXT, RTF, JSON</p>
+      </div>
+      <input
+        id="dropzone-file"
+        type="file"
+        class="hidden"
+        (change)="onFileSelected($event)"
+      />
+    </label>
+  </div>
 
-    <div *ngIf="!isLoading && data?.sentences" class="mt-4">
-      <div
+  <!-- Content Display Section -->
+  <div *ngIf="!isLoading && data?.sentences" class="mt-4">
+    <!-- Sentence List -->
+    <div>
+      <button
         *ngFor="let item of data?.sentences; let i = index"
-        class="mt-1 border p-2 cursor-pointer hover:bg-gray-100"
+        class="w-full text-start mt-1 border p-2 cursor-pointer hover:bg-gray-100"
         [ngClass]="{
           'bg-gray-100': i === curSentenceIndex
         }"
         (click)="curSentenceIndex = i"
       >
         {{ item.sentence }}
-      </div>
+      </button>
+    </div>
 
-      <div class="mb-4 mt-2 border-b border-gray-200 dark:border-gray-700">
-        <ul
-          class="flex flex-wrap -mb-px text-sm font-medium text-center"
-          id="default-tab"
-          data-tabs-toggle="#default-tab-content"
-          role="tablist"
-        >
-          <li class="me-2" role="presentation">
-            <button
-              class="inline-block p-4 border-b-2 rounded-t-lg text-gray-500 hover:border-gray-300 aria-selected:text-black aria-selected:border-black"
-              id="table-tab"
-              data-tabs-target="#table"
-              type="button"
-              role="tab"
-              aria-controls="table"
-              [ariaSelected]="
-                tabService.getCurrentTab() === tabService.tabs.Table
-              "
-              (click)="tabService.setTab(tabService.tabs.Table)"
-            >
-              Table
-            </button>
-          </li>
-          <li class="me-2" role="presentation">
-            <button
-              class="inline-block p-4 border-b-2 rounded-t-lg text-gray-500 hover:border-gray-300 aria-selected:text-black aria-selected:border-black"
-              id="tree-tab"
-              data-tabs-target="#tree"
-              type="button"
-              role="tab"
-              aria-controls="tree"
-              [ariaSelected]="
-                tabService.getCurrentTab() === tabService.tabs.Tree
-              "
-              (click)="tabService.setTab(tabService.tabs.Tree)"
-            >
-              Tree
-            </button>
-          </li>
-        </ul>
-      </div>
-
-      <div
-        *ngIf="tabService.getCurrentTab() === tabService.tabs.Table"
-        class="flex gap-2"
+    <!-- Tab Navigation -->
+    <div class="mb-4 mt-2 border-b border-gray-200">
+      <ul
+        class="flex flex-wrap -mb-px text-sm font-medium text-center"
+        id="default-tab"
+        data-tabs-toggle="#default-tab-content"
+        role="tablist"
       >
-        <div class="flex flex-col gap-2">
-          <div
-            (click)="downloadFile()"
-            class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
-            title="download"
+        <!-- Table Tab -->
+        <li class="me-2" role="presentation">
+          <button
+            class="inline-block p-4 border-b-2 rounded-t-lg text-gray-500 hover:border-gray-300 aria-selected:text-black aria-selected:border-black"
+            id="table-tab"
+            data-tabs-target="#table"
+            type="button"
+            role="tab"
+            aria-controls="table"
+            [ariaSelected]="
+              tabService.getCurrentTab() === tabService.tabs.Table
+            "
+            (click)="tabService.setTab(tabService.tabs.Table)"
           >
-            <img src="../assets/download.png" alt="download" class="w-5" />
-          </div>
-          <div
-            (click)="modalService.openModal('FilterChunksModal')"
-            class="relative border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
-            title="filter chunks"
+            Table
+          </button>
+        </li>
+        <!-- Tree Tab -->
+        <li class="me-2" role="presentation">
+          <button
+            class="inline-block p-4 border-b-2 rounded-t-lg text-gray-500 hover:border-gray-300 aria-selected:text-black aria-selected:border-black"
+            id="tree-tab"
+            data-tabs-target="#tree"
+            type="button"
+            role="tab"
+            aria-controls="tree"
+            [ariaSelected]="tabService.getCurrentTab() === tabService.tabs.Tree"
+            (click)="tabService.setTab(tabService.tabs.Tree)"
           >
-            <img src="../assets/filter.png" alt="filter" class="w-5" />
-            <div
-              *ngIf="chunkFilterService.isSelected()"
-              class="absolute w-3 h-3 rounded-lg bg-gray-500 -top-1 -right-1"
-            ></div>
-          </div>
+            Tree
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Table Content -->
+    <div
+      *ngIf="tabService.getCurrentTab() === tabService.tabs.Table"
+      class="flex gap-2"
+    >
+      <!-- Toolbar -->
+      <div class="flex flex-col gap-2">
+        <button
+          (click)="downloadFile()"
+          class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
+          title="download"
+        >
+          <img src="../assets/download.png" alt="download" class="w-5" />
+        </button>
+        <button
+          (click)="modalService.openModal('FilterChunksModal')"
+          class="relative border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
+          title="filter chunks"
+        >
+          <img src="../assets/filter.png" alt="filter" class="w-5" />
           <div
-            (click)="modalService.openModal('InfoModal')"
-            class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
-            title="info"
-          >
-            <img src="../assets/question.png" alt="info" class="w-5" />
-          </div>
-        </div>
-        <div class="w-full">
-          <table class="table-auto border w-full" style="border-radius: 80px">
-            <thead>
-              <tr>
-                <th class="px-4 py-2 border">Role</th>
-                <th class="px-4 py-2 border">Chunk</th>
-              </tr>
-            </thead>
-            <tr *ngFor="let chunk of filterChunks()">
-              <td class="px-4 py-2 border">{{ chunk.role }}</td>
-              <td class="px-4 py-2 border">
-                <span
-                  class="cursor-pointer hover:bg-gray-200"
-                  *ngFor="let word of chunk.words"
-                  (mouseover)="toolbox = word"
-                  (mouseout)="toolbox = null"
-                >
-                  {{ word.origin }}
-                </span>
-              </td>
+            *ngIf="chunkFilterService.isSelected()"
+            class="absolute w-2 h-2 rounded-lg bg-gray-500 -top-1 -right-1"
+          ></div>
+        </button>
+        <button
+          (click)="modalService.openModal('InfoModal')"
+          class="border p-2 cursor-pointer bg-gray-50 hover:bg-gray-100 active:scale-95"
+          title="info"
+        >
+          <img src="../assets/question.png" alt="info" class="w-5" />
+        </button>
+      </div>
+      <!-- Chunks -->
+      <div class="w-full">
+        <!-- Chunk Table -->
+        <table class="table-auto border w-full" style="border-radius: 80px">
+          <thead>
+            <tr>
+              <th class="px-4 py-2 border">Role</th>
+              <th class="px-4 py-2 border">Chunk</th>
             </tr>
-          </table>
-          <div class="mt-4 bg-white border py-2 px-3">
-            <ng-container *ngIf="toolbox; else noToolbox">
-              <span class="font-bold">Lemma: </span>
-              {{ toolbox.lemma }}
-              <span class="font-bold ml-1">Tag: </span>
-              {{ toolbox.tag }}
-            </ng-container>
-            <ng-template #noToolbox>
-              Point to a chunk from the table...
-            </ng-template>
-          </div>
+          </thead>
+          <tr *ngFor="let chunk of filterChunks()">
+            <td class="px-4 py-2 border">{{ chunk.role }}</td>
+            <td class="px-4 py-2 border">
+              <span
+                class="cursor-pointer hover:bg-gray-200"
+                *ngFor="let word of chunk.words"
+                (mouseover)="toolbox = word"
+                (mouseout)="toolbox = null"
+              >
+                {{ word.origin }}
+              </span>
+            </td>
+          </tr>
+        </table>
+        <!-- Toolbox -->
+        <div class="mt-4 bg-white border py-2 px-3">
+          <ng-container *ngIf="toolbox; else noToolbox">
+            <span class="font-bold">Lemma: </span>
+            {{ toolbox.lemma }}
+            <span class="font-bold ml-1">Tag: </span>
+            {{ toolbox.tag }}
+          </ng-container>
+          <ng-template #noToolbox>
+            Point to a chunk from the table...
+          </ng-template>
         </div>
       </div>
-      <div *ngIf="tabService.getCurrentTab() === tabService.tabs.Tree">
-        <pre>{{
-          data && data.sentences[curSentenceIndex]
-            ? data.sentences[curSentenceIndex].tree
-            : null
-        }}</pre>
-      </div>
-      <table class="table-auto border w-full mt-8" style="border-radius: 80px">
-        <thead>
-          <tr>
-            <th class="px-4 py-2 border">Word</th>
-            <th class="px-4 py-2 border">Count</th>
-            <th class="px-4 py-2 border">Translation</th>
-          </tr>
-        </thead>
-        <tr *ngFor="let word of data?.words">
-          <td class="px-4 py-2 border">{{ word.word }}</td>
-          <td class="px-4 py-2 border">{{ word.count }}</td>
-          <td class="px-4 py-2 border">{{ word.translation }}</td>
+    </div>
+
+    <!-- Tree Content -->
+    <div *ngIf="tabService.getCurrentTab() === tabService.tabs.Tree">
+      <pre>{{
+        data && data.sentences[curSentenceIndex]
+          ? data.sentences[curSentenceIndex].tree
+          : null
+      }}</pre>
+    </div>
+
+    <!-- Word Count Table -->
+    <table class="table-auto border w-full mt-8" style="border-radius: 80px">
+      <thead>
+        <tr>
+          <th class="px-4 py-2 border">Word</th>
+          <th class="px-4 py-2 border">Count</th>
+          <th class="px-4 py-2 border">Translation</th>
         </tr>
-      </table>
-    </div>
-
-    <div *ngIf="isLoading" class="loader mt-6 mx-auto"></div>
-
-    <div *ngIf="errorService.getState()" class="mt-4 text-center text-red-500">
-      <span class="font-bold">{{ errorService.getState()?.status }}</span>
-      {{ errorService.getState()?.message }}
-    </div>
-
-    <app-chunk-filter-modal *ngIf="modalService.isOpen('FilterChunksModal')" />
-
-    <app-info-modal *ngIf="modalService.isOpen('InfoModal')" />
+      </thead>
+      <tr *ngFor="let word of data?.words">
+        <td class="px-4 py-2 border">{{ word.word }}</td>
+        <td class="px-4 py-2 border">{{ word.count }}</td>
+        <td class="px-4 py-2 border">{{ word.translation }}</td>
+      </tr>
+    </table>
   </div>
+
+  <!-- Loader -->
+  <div *ngIf="isLoading" class="loader mt-6 mx-auto"></div>
+
+  <!-- Error Display -->
+  <div *ngIf="errorService.getState()" class="mt-4 text-center text-red-500">
+    <span class="font-bold">{{ errorService.getState()?.status }}</span>
+    {{ errorService.getState()?.message }}
+  </div>
+
+  <!-- Modals -->
+  <app-chunk-filter-modal *ngIf="modalService.isOpen('FilterChunksModal')" />
+  <app-info-modal *ngIf="modalService.isOpen('InfoModal')" />
 </div>

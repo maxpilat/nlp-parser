@@ -1,5 +1,5 @@
 import { CommonModule, TitleCasePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NlpService, NlpSentence, NlpWord } from '../services/nlp.service';
 import { ModalService } from '../services/modal.service';
 import { Word } from '../models/chunk';
@@ -23,6 +23,7 @@ export class AppComponent {
   isLoading = false;
   toolbox: Word | null = null;
   curSentenceIndex: number = 0;
+  @ViewChild('dropzone') private _dropzone: ElementRef;
 
   constructor(
     private nlpService: NlpService,
@@ -31,6 +32,12 @@ export class AppComponent {
     public errorService: ErrorService,
     public tabService: TabService
   ) {}
+
+  onDropzoneKeyPress(event: KeyboardEvent) {
+    if (event.key === 'Enter') {
+      this._dropzone.nativeElement.click();
+    }
+  }
 
   async onFileSelected(event: Event) {
     this.errorService.clearState();
