@@ -33,13 +33,14 @@
   </div>
 
   <!-- Content Display Section -->
-  <div *ngIf="!isLoading && data?.sentences" class="mt-4">
+  <div *ngIf="!isLoading && data?.sentences" class="mt-6" @fadeIn>
     <!-- Sentence List -->
     <div>
       <button
         *ngFor="let item of data?.sentences; let i = index"
         class="w-full text-start mt-1 border p-2 cursor-pointer hover:bg-gray-100"
         [ngClass]="{
+          'mt-1': i !== 0,
           'bg-gray-100': i === curSentenceIndex
         }"
         (click)="curSentenceIndex = i"
@@ -172,8 +173,8 @@
       }}</pre>
     </div>
 
-    <!-- Word Count Table -->
-    <table class="table-auto border w-full mt-8" style="border-radius: 80px">
+    <!-- Translation Table -->
+    <table class="table-auto border w-full mt-6" style="border-radius: 80px">
       <thead>
         <tr>
           <th class="px-4 py-2 border">Word</th>

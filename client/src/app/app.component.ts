@@ -10,12 +10,30 @@ import { ErrorService } from '../services/error.service';
 import { finalize } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TabService } from '../services/tab.service';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [CommonModule, TitleCasePipe, ChunkFilterModal, InfoModal],
   templateUrl: './app.component.html',
+  animations: [
+    trigger('fadeIn', [
+      state('void', style({ opacity: 0, transform: 'translateY(20px)' })),
+      transition(':enter', [
+        animate(
+          '500ms ease-out',
+          style({ opacity: 1, transform: 'translateY(0)' })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class AppComponent {
   title = 'nlp parser';
